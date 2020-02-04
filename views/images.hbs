@@ -1,0 +1,16 @@
+<h2 class="text-center">Obrázky</h2>
+<div class="row" style="max-width: 90%; margin: 0 auto;">
+    {{# each images}}
+
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="data:image/jpg;base64,{{this}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+            <div class="card-footer text-muted text-center">
+                2 days ago
+            </div>
+        </div>
+    {{/each}}
+</div>

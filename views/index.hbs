@@ -1,0 +1,50 @@
+
+    <h1 class="text-center">Vítejte</h1>
+    <hr>
+    <h2>Příspěvky:</h2>
+    <div class="row" style="max-width: 90%; margin: 0 auto;">
+
+        {{# each articles}}
+            <div class="col-sm-4">
+
+                <div class="card">
+                    <div class="card-body">
+                        {{# each this}}
+
+                            <h5 class="card-title">{{title}}</h5>
+                            <p class="card-text">{{body}}</p>
+                        {{/each}}
+                    </div>
+                    <div class="card-footer text-muted text-center">
+
+                        <p>{{moment updatedAt "DD.MM.YYYY"}} </p>
+                            {{#if updatedBy}}
+                                <p>Naposledy upraveno: {{updatedBy.name}} v {{moment updatedAt "HH:MM DD.MM.YYYY"}}</p>
+                            {{/if}}
+                    </div>
+
+                </div>
+            </div>
+        {{/each}}
+    </div>
+
+    <h2 class="text-center">Obrázky</h2>
+    <div class="row" style="max-width: 90%; margin: 0 auto;">
+        {{# each images}}
+
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="data:image/jpg;base64,{{this}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    2 days ago
+                </div>
+            </div>
+        {{/each}}
+    </div>
+
+
+
+
