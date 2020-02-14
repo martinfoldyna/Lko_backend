@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const ArticlesCtrl = require('../controllers/post.ctrl');
+const PostsCtrl = require('../controllers/post.ctrl');
 
-router.post('/add', ArticlesCtrl.add);
-router.post('/update/:id', ArticlesCtrl.update)
-router.get('/load/:subject', ArticlesCtrl.load);
+router.post('/add/:subject', PostsCtrl.add);
+router.post('/update/:id', PostsCtrl.update)
+router.get('/load/:subject', PostsCtrl.load);
 
 module.exports = router;

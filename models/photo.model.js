@@ -25,6 +25,9 @@ const photosSchema = new mongoose.Schema({
     type: {
         type: String
     },
+    orientation: {
+        type: Number
+    },
     data: String,
     subject: String,
     createdBy: Object,

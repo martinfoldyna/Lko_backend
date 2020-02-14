@@ -16,7 +16,8 @@ module.exports.add = (req, res, next) => {
     let newArticle = new Post({
         title: requestBody.title,
         createdAt: Date.now(),
-        createdBy: user
+        createdBy: user,
+        subject: req.params.subject
     })
 
     if(requestBody.url) {

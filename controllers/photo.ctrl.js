@@ -9,25 +9,32 @@ let conn = mongoose.connection;
 Grid.mongo = mongoose.mongo;
 let gfs;
 
-
-    //TODO: Reciving just base64 strings - redo
     module.exports.uploadPhotos = (req, res, next) => {
 
-        var fileKeys = Object.keys(req.files);
+        let fileKeys = Object.keys(req.files);
         let files = [];
         let subject = req.body.subject;
         let docId = req.body.docId;
 
-        fileKeys.forEach(function(key) {
+        fileKeys.forEach((key) => {
             files.push(req.files[key]);
         });
 
+
+
         files.forEach(file => {
+            let slicedName = file.name.split(';orientation=');
+            file.name = slicedName[0];
+            file.orientation = parseInt(slicedName[1]);
+            if(!file.orientation) {
+                file.orientation = 1;
+            }
             let newFile = new Photo({
                 length: file.size,
                 name: file.name,
                 type: file.mimeType,
                 data: file.data.toString('base64'),
+                orientation: file.orientation
             })
 
             console.log(req.app.get('user'));
@@ -45,7 +52,9 @@ let gfs;
                 newFile.doc_id = docId;
             }
 
-            newFile.save();
+            newFile.save((err) => {
+                if(err) next(err);
+            });
         })
 
         console.log(fileKeys);
@@ -73,6 +82,7 @@ let gfs;
                             _id: image._id,
                             filename: image.name,
                             base64: image.data.toString('base64'),
+                            orientation: image.orientation,
                             createdAt: image.createdAt,
                             createdBy: image.createdBy,
                         });

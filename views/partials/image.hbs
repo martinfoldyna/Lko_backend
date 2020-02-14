@@ -1,0 +1,17 @@
+<div class="card" style="width: 18rem; overflow: hidden;">
+    {{#each object}}
+    <div class="card-header">
+        <a data-toggle="modal" data-target="#modalRelatedContent"><img class="card-img-top thumbnail" src="data:image/jpg;base64,{{data}}" alt="Card image cap"></a>
+    </div>
+    <div class="card-body">
+
+        <h5 class="card-title">{{name}}</h5>
+
+        <p class="card-text">Property: {{@key}} Value = {{thisData}}</p>
+        {{>image-modal input-image=data}}
+    </div>
+    <div class="card-footer text-muted text-center">
+        2 days ago
+    </div>
+    {{/each}}
+</div>

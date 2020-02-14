@@ -12,7 +12,9 @@ const fileUpload = require('express-fileupload');
 const mongoConfig = require('./config/mongo.settings');
 const busboyBodyParser = require('busboy-body-parser');
 const handlebarsHelpers = require('handlebars-helpers');
+const customHelpers = require('./config/customHelpers');
 const exphbs = require('express-handlebars');
+
 // const MomentHandler = require('handlebars.moment')();
 
 
@@ -43,8 +45,9 @@ app.engine('hbs', exphbs({
   defaultLayout: 'layout',
   layoutsDir: __dirname + '/views/layouts',
   partialsDir: __dirname + '/views/partials',
-  helpers: handlebarsHelpers()
+  helpers: {...handlebarsHelpers(), ...customHelpers},
 }))
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -86,7 +89,7 @@ app.set('port', process.env.PORT || 3000);
 
 var server = app.listen(app.get('port'), function () {
   console.log('✅ Server listening on port ' + server.address().port);
-  console.log('✅ Visit http://localhost:' + server.address().port + '/public/view for public site');
+  console.log('✅ Visit http://localhost:' + server.address().port + '/public/ for public site');
 });
 
 // error handler

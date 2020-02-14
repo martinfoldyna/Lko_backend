@@ -14,7 +14,6 @@ const videoSchema = new mongoose.Schema({
     },
     createdBy: {
         type: Object,
-        required: true,
     },
     updatedBy: {
         type: Object

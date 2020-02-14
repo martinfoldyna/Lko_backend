@@ -1,18 +1,79 @@
+<style>
+    .row.no-gutter [class*='col-'] {
+        padding-right:0;
+        padding-left:0;
+        height: 300px;
+        overflow: hidden;
+        position: relative;
+    }
 
+    .row.no-gutter .img-responsive {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1.1, 1.1);
+        transition: all .5s;
+
+    }
+
+    .row.no-gutter .img-responsive:hover {
+        transform: scale(1, 1);
+    }
+
+
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.55);
+        opacity: 0;
+        transition: all .5s;
+        cursor: pointer;
+    }
+
+    .overlay-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+    }
+
+    .overlay-container ion-icon {
+        font-size: 2em;
+    }
+
+    .row.no-gutter [class*='col-']:hover .overlay {
+
+        opacity: 1;
+    }
+
+    .centered-button {
+        margin: 20px auto;
+    }
+
+
+</style>
     <h1 class="text-center">Vítejte</h1>
     <hr>
+<section id="articles">
     <h2>Příspěvky:</h2>
     <div class="row" style="max-width: 90%; margin: 0 auto;">
 
         {{# each articles}}
             <div class="col-sm-4">
-
-                <div class="card">
+                <div class="card" style="border-radius: 20px; overflow: hidden">
                     <div class="card-body">
                         {{# each this}}
 
                             <h5 class="card-title">{{title}}</h5>
                             <p class="card-text">{{body}}</p>
+                            {{#if url}}
+                                <a href="{{url}}">{{url}}</a>
+                            {{/if}}
                         {{/each}}
                     </div>
                     <div class="card-footer text-muted text-center">
@@ -27,23 +88,44 @@
             </div>
         {{/each}}
     </div>
+</section>
 
-    <h2 class="text-center">Obrázky</h2>
-    <div class="row" style="max-width: 90%; margin: 0 auto;">
-        {{# each images}}
+<section id="images">
+    <h2 class="text-center">obrázky</h2>
+    <div class="container-fluid">
+        <div class="row no-gutter">
+            {{# each images}}
+                <div class="col-xs-6 col-sm-2 col-lg-3">
 
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="data:image/jpg;base64,{{this}}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a data-toggle="modal" data-target="#modalRelatedContent">
+                        <img alt="picture" src="data:image/jpg;base64,{{data}}" class="img-responsive">
+
+                        <div class="overlay">
+                                <div class="overlay-container">
+                                    <ion-icon name="open-outline"></ion-icon>
+                                </div>
+                        </div>
+                    </a>
+                    {{>image-modal input-image=data}}
                 </div>
-                <div class="card-footer text-muted text-center">
-                    2 days ago
-                </div>
-            </div>
-        {{/each}}
+
+            {{/each}}
+        </div>
     </div>
+    <div class="row">
+        <div class="col text-center">
+            <a href="/public/images" class="btn btn-outline-primary btn-rounded btn-md ml-4 centered-button">Zobrazit více</a>
+        </div>
+    </div>
+</section>
+<section id="subjects">
+    <h2 class="text-center">Předměty</h2>
+    <h3>MME</h3>
+    {{# each videos}}
+        <img src="data:image/jpg;base64,{{thumbnail}}" alt="">
+    {{/each}}
+</section>
+<!--    -->
 
 
 
