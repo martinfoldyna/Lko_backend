@@ -14,13 +14,12 @@ let gfs;
         let fileKeys = Object.keys(req.files);
         let files = [];
         let subject = req.body.subject;
+        let group = req.body.group;
         let docId = req.body.docId;
 
         fileKeys.forEach((key) => {
             files.push(req.files[key]);
         });
-
-
 
         files.forEach(file => {
             let slicedName = file.name.split(';orientation=');
@@ -36,20 +35,17 @@ let gfs;
                 data: file.data.toString('base64'),
                 orientation: file.orientation
             })
-
             console.log(req.app.get('user'));
             if(req.app.get('user')) {
                 newFile.createdBy = req.app.get('user');
                 newFile.createdAt = Date.now();
             }
-
-
             if(subject) {
                 newFile.subject = subject;
             }
 
-            if(docId) {
-                newFile.doc_id = docId;
+            if(subject === "STR") {
+                newFile.group = req.body.group;
             }
 
             newFile.save((err) => {
@@ -57,11 +53,7 @@ let gfs;
             });
         })
 
-        console.log(fileKeys);
-        console.log(files);
-
         res.send('all files have been uploaded');
-
 
         res.end();
     }
@@ -85,6 +77,7 @@ let gfs;
                             orientation: image.orientation,
                             createdAt: image.createdAt,
                             createdBy: image.createdBy,
+                            group: image.group
                         });
                     }
                 })
@@ -92,13 +85,12 @@ let gfs;
             })
     }
 
-    module.exports.retrievePhotoForDocument = (req, res, next) => {
-        let docId = req.params.id;
+    module.exports.deleteGroup = (req, res, next) => {
+        let group = req.params.group;
 
-        Photo.findOne({doc_id: docId}).then(file => {
-            if(!file) return next(new Error('file not found'));
-
-            res.send(file);
+        Photo.remove({group: group}, (err, result) => {
+            if(err) return next(err);
+            res.send(result);
         })
     }
 

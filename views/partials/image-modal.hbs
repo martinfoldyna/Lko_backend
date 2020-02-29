@@ -1,39 +1,6 @@
-<style>
-    .modal-content{
-        border-radius: 20px;
-
-    }
-
-</style>
-
-<div class="col-lg-4 col-md-6 mb-4">
-
-    <!--Modal: Name-->
-    <div class="modal fade" id="modalRelatedContent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-
-            <!--Content-->
-            <div class="modal-content">
-
-                <!--Body-->
-                <div class="modal-body mb-0 p-0" style="overflow: hidden">
-
-                    <img src="data:image/jpg;base64,{{data}}" style="width: 100%;">
-
-                </div>
-
-                <!--Footer-->
-                <div class="modal-footer justify-content-center">
-                    <span class="mr-4">{{name}}</span>
-
-                    <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
-
-                </div>
-
-            </div>
-            <!--/.Content-->
-
-        </div>
+<div id="modal-media-image" class="uk-flex-top" uk-modal>
+    <div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical">
+        <button class="uk-modal-close-outside" type="button" uk-close></button>
+        <img src="data:image/jpg;base64,{{data}}" alt="">
     </div>
 </div>
-<!-- Grid column -->

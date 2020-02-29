@@ -6,7 +6,9 @@ module.exports.add = (req, res, next) => {
     }
 
     const requestBody = req.body;
-    let user = undefined
+    const thumbnail = req.files.thumbnail;
+    let subject = req.params.subject;
+    let user;
     if(req.app.get('user')) {
         user = req.app.get('user')
     } else {
@@ -17,6 +19,7 @@ module.exports.add = (req, res, next) => {
         title: requestBody.title,
         createdAt: Date.now(),
         createdBy: user,
+        thumbnail: thumbnail.data.toString('base64'),
         subject: req.params.subject
     })
 
@@ -26,10 +29,6 @@ module.exports.add = (req, res, next) => {
 
     if(requestBody.body) {
         newArticle.body = requestBody.body;
-    }
-
-    if(requestBody.subject) {
-        newArticle.subject = requestBody.subject;
     }
 
     newArticle.save((err, doc) => {
@@ -45,8 +44,8 @@ module.exports.add = (req, res, next) => {
 
 module.exports.load = (req, res, next) => {
     let subject = req.params.subject;
-    let finArticle = subject === "all" ?  Post.find({}) : Post.find({subject: subject});
-    finArticle.then(data => {
+    let findArticle = subject === "all" ?  Post.find({}) : Post.find({subject: subject});
+    findArticle.then(data => {
             res.send(data);
         }).catch(err => {
             return next(err);
@@ -84,7 +83,7 @@ module.exports.delete = (req, res, next) => {
     console.log(req.params.id);
     Post.deleteOne({_id: req.params.id}, {}, (err, results) => {
         if(err) return next(err);
-        res.send(results.result)
+        res.send(results)
     }).catch(err => {
         return next(err);
     })

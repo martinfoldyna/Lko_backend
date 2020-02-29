@@ -1,22 +1,22 @@
-const User = require('./../models/user.model');
+const User = require('./../models/authorisedUser.model');
 
-module.exports.update = (req, res, next) => {
-    console.log(req.user);
-    User.findOneAndUpdate({_id: req.params.id}, {
-        name: req.body.name,
-        email: req.body.email,
-        username: req.body.username
-    }, {new: true}, (err, doc) => {
-            if(err) return res.status(400).send('Uživatel nenalezen!');
+module.exports.getAll = (req, res, next) => {
+    User.find().then((users) => {
+        if(users) {
+            res.send(users);
+        } else {
+            res.send('Users not found');
+        }
+    }).catch(err => {
+        return next(err);
+    })
+}
 
-            res.status(200).json({
-                data: doc,
-                toaster: {
-                    message: 'Vaše uživatelské informace byly změněny.',
-                    title: 'Jupí!',
-                    status: "success"
-                }
-        })
-
-        })
+module.exports.remove = (req, res, next) => {
+    User.deleteOne({_id: req.params.id}, {}, (err, result) => {
+        if(err) {
+            return next(err);
+        }
+        res.send(result);
+    })
 }

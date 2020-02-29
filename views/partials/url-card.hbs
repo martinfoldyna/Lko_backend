@@ -1,0 +1,22 @@
+<style>
+    .rounder-corners {
+        border-radius: 20px !important;
+    }
+</style>
+<div>
+    <a href="{{url}}" style="color: inherit; text-decoration: none;" target="_blank">
+        <div class="uk-card uk-card-default uk-card-hover rounder-corners">
+            <div class="uk-card-media-top">
+
+                <div class="uk-overflow-hidden">
+                    <img src="data:image/jpg;base64,{{thumbnail}}" alt="" class="uk-animation-kenburns">
+                </div>
+
+            </div>
+            <div class="uk-card-body">
+                <h2 class="uk-card-title">{{title}}</h2>
+                <code class="uk-text-primary">#video</code>
+            </div>
+        </div>
+    </a>
+</div>

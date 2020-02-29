@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const Articles = require('../models/post.model');
+const Post = require('../models/post.model');
 const Photo = require('../models/photo.model');
 const Video = require('../models/video.model');
 const helpers = require('./../controllers/helpers');
@@ -8,7 +8,7 @@ const helpers = require('./../controllers/helpers');
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  let allArticles = [];
+  let allWebsites = [];
   let allFiles = [];
   let image = {
     _id: '',
@@ -18,18 +18,32 @@ router.get('/', function(req, res, next) {
     subject: '',
   }
 
-  Articles.find().then(data => {
+  Post.find().then(data => {
     if (!data) throw new Error('Data not found');
 
-    allArticles = data;
-    console.log(allArticles);
+      let allPosts = data;
+
+    allWebsites = data.filter(article => {
+      if(article.subject === "WEB") {
+        return true;
+      } else {
+        return false;
+      }
+    }).map(website => {
+      return {
+        _id: website._id,
+        title: website.title,
+        thumbnail: website.thumbnail,
+        url: website.url,
+        subject: website.subject
+      }
+    });
+
 
     Photo.find().then(images => {
-      allFiles = images.filter(function (img) {
-        if (img.doc_id) {
-          return false; // skip
-        }
-        return true;
+
+      allnonThumnailsImages = images.filter(function (img, index) {
+        return !img.originalImg && index < 3;
       }).map(file => {
 
         if (file.data !== undefined && !file.doc_id) {
@@ -46,74 +60,55 @@ router.get('/', function(req, res, next) {
         }
       })
 
-      Video.find().then(videos => {
-        allVideos = videos.map(video => {
-          let thumbnail;
-          helpers.findModel('photo').findOne({doc_id: video._id}).then(image => {
-            if (image) {
-              thumbnail = image._id;
-            }
-          })
-          if (video.data !== undefined && !video.doc_id) {
-            let returnVideo = {
-              _id: video._id,
-              title: video.title,
-              thumbnail: thumbnail,
-              url: video.url,
-              subject: video.subject
-            }
-            return returnVideo
+      let allDrawings = images.filter(image => {
+        if (image.group) {
+          return true;
+        }
+        return false;
+      })
+
+      allMMEImages = images.filter((image, index) => {
+        if(image.subject === "MME" && !image.doc_id && index < 3) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+
+
+        let allVideos = allPosts.filter((video, index) => {
+          if(index < 3) {
+            return true;
           } else {
-            return ''
+            return false;
           }
+        }).map(video => {
+              return {
+                _id: video._id,
+                title: video.title,
+                thumbnail: video.thumbnail,
+                url: video.url,
+                subject: video.subject
+              }
         })
 
-        res.render('index', {articles: allArticles, images: allFiles, videos: allVideos})
-      })
+
+        res.render('index', {websites: allWebsites, images: allnonThumnailsImages, videos: allVideos, mmeImages: allMMEImages, drawings: allDrawings})
     })
 
   })
 })
-  // helpers.findModel('photo').find({}).then(files => {
-  //   if(!files) throw new Error('Files not found');
-  //
-  //
-  //
-  //   allFiles = files.map(file => {
-  //
-  //     if (file.data !== undefined && !file.doc_id) {
-  //       let image = {
-  //         _id: file._id,
-  //         length: file.length,
-  //         name: file.name,
-  //         data: file.data,
-  //         subject: file.subject,
-  //       }
-  //       return image
-  //     } else {
-  //       return ''
-  //     }
-  //   })
-  //
-  //   console.log(allFiles)
-  // });
 
-  // let allVideos = []
-  // helpers.findModel('video').find({}).then(videos => {
-  //
-  // })
 
 
 router.get('/images', (req, res) => {
 
     let allFiles = [];
       Photo.find().then(images => {
-        allFiles = images.filter(function (img) {
-          console.log(img.name+' : '+img.doc_id);
-          if (img.doc_id !== undefined) {
+        allFiles = images.filter(img => {
+          if (img.group) {
             return false; // skip
           }
-          console.log('ejjj');
           return true;
         }).map(file => {
 

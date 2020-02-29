@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const User = require('./../models/user.model');
 
 const uploadsFilesSchema = new mongoose.Schema({
     length: Number,
@@ -29,6 +28,8 @@ const photosSchema = new mongoose.Schema({
         type: Number
     },
     data: String,
+    originalImg: String,
+    group: String,
     subject: String,
     createdBy: Object,
     createdAt: Date

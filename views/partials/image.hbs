@@ -1,17 +1,20 @@
-<div class="card" style="width: 18rem; overflow: hidden;">
-    {{#each object}}
-    <div class="card-header">
-        <a data-toggle="modal" data-target="#modalRelatedContent"><img class="card-img-top thumbnail" src="data:image/jpg;base64,{{data}}" alt="Card image cap"></a>
-    </div>
-    <div class="card-body">
+<style>
+    .rounded-corners {
+        border-radius: 20px !important;
+    }
+</style>
+<div>
+    <div class="uk-card uk-card-default uk-card-hover rounded-corners">
+        <div class="uk-card-media-top">
 
-        <h5 class="card-title">{{name}}</h5>
+            <div class="uk-overflow-hidden">
+                <img src="data:image/jpg;base64,{{data}}" alt="" class="uk-animation-kenburns">
+            </div>
 
-        <p class="card-text">Property: {{@key}} Value = {{thisData}}</p>
-        {{>image-modal input-image=data}}
+        </div>
+        <div class="uk-card-body">
+            <h3 class="uk-card-title">{{name}}</h3>
+            <code class="uk-text-primary">#foto</code>
+        </div>
     </div>
-    <div class="card-footer text-muted text-center">
-        2 days ago
-    </div>
-    {{/each}}
 </div>

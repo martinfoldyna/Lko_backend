@@ -54,22 +54,58 @@
     .centered-button {
         margin: 20px auto;
     }
+
+    #photos {
+        /* Prevent vertical gaps */
+        line-height: 0;
+
+        -webkit-column-count: 3;
+        -webkit-column-gap:   0px;
+        -moz-column-count:    3;
+        -moz-column-gap:      0px;
+        column-count:         3;
+        column-gap:           0px;
+    }
+
+    #photos div,
+    #photos div a img,
+    #photos div a {
+        /* Just in case there are inline attributes */
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    #photos div {
+        overflow: hidden;
+    }
+
+    #photos div a img {
+        transform: scale(1.02, 1.02);
+        transition: all .5s;
+    }
+
+    #photos div:hover a img {
+        transform: scale(1, 1);
+    }
 </style>
 <section id="images">
     <h2 class="text-center">obrázky</h2>
     <div class="container-fluid">
-        <div class="row no-gutter">
+        <div id="photos">
             {{# each images}}
-                <div class="col-xs-6 col-sm-2 col-lg-3">
-                    <img alt="picture" src="data:image/jpg;base64,{{data}}" class="img-responsive">
-                </div>
-
+                {{#if data}}
+                    <div>
+                        <a data-fancybox="gallery" href="data:image/jpg;base64,{{data}}">
+                            <img src="data:image/jpg;base64,{{data}}" alt="">
+                        </a>
+                    </div>
+                {{/if}}
             {{/each}}
         </div>
     </div>
     <div class="row">
         <div class="col text-center">
-            <a href="/public/" class="btn btn-outline-primary btn-rounded btn-md ml-4 centered-button">zpět</a>
+            <a href="/public/" class="uk-button uk-button-primary centered-button">zpět</a>
         </div>
     </div>
 </section>

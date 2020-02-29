@@ -8,14 +8,12 @@ const userCtrl = require('./../controllers/user.ctrl');
 /* ::GET:: users listing. */
 router.get('/', function(req, res, next) {
     console.log(req.user);
-  res.json({
-      requestUser: req.user,
-      message: 'Hello Bitches'
 
-  });
 
 });
 
-router.post('/update/:id', userCtrl.update)
+router.get('/getAll', userCtrl.getAll);
+
+router.post('/remove/:id', userCtrl.remove);
 
 module.exports = router;
