@@ -43,7 +43,8 @@ router.get('/', function(req, res, next) {
     Photo.find().then(images => {
 
       allnonThumnailsImages = images.filter(function (img, index) {
-        return !img.originalImg && index < 3;
+        // return img.subject ==="MME" && !img.originalImg && index < 3;
+        return img.subject ==="MME" && img.thumbnail;
       }).map(file => {
 
         if (file.data !== undefined && !file.doc_id) {
@@ -53,18 +54,12 @@ router.get('/', function(req, res, next) {
             name: file.name,
             data: file.data,
             subject: file.subject,
+            classYear: file.classYear + 1
           }
           return image
         } else {
           return ''
         }
-      })
-
-      let allDrawings = images.filter(image => {
-        if (image.group) {
-          return true;
-        }
-        return false;
       })
 
       allMMEImages = images.filter((image, index) => {
@@ -91,25 +86,39 @@ router.get('/', function(req, res, next) {
                 subject: video.subject
               }
         })
+      Photo.find({subject: 'STR'}).then(drawings => {
+        let allGroups = [...new Set(drawings.map(item => item.group))];
+        let allImages = drawings;
+        let allDrawings = [];
 
-
+        for (let i = 0; i < allGroups.length; i++) {
+          const thisGroup = allGroups[i];
+          let galleryImages = [];
+          allImages.forEach(image => {
+            if (image.group === thisGroup) {
+              galleryImages.push(`data:image/jpg;base64,${image.data}`);
+            }
+          });
+          allDrawings[thisGroup] = galleryImages;
+        }
         res.render('index', {websites: allWebsites, images: allnonThumnailsImages, videos: allVideos, mmeImages: allMMEImages, drawings: allDrawings})
+
+
+      })
     })
 
   })
 })
-
-
 
 router.get('/images', (req, res) => {
 
     let allFiles = [];
       Photo.find().then(images => {
         allFiles = images.filter(img => {
-          if (img.group) {
-            return false; // skip
+          if (!img.group && img.thumbnail) {
+            return true; // skip
           }
-          return true;
+          return false;
         }).map(file => {
 
         if (file.data !== undefined && !file.doc_id) {
@@ -125,14 +134,64 @@ router.get('/images', (req, res) => {
           return ''
         }
       })
+        Post.find({subject: "MME"}).then(data => {
 
-        res.render('images', {images: allFiles});
+          let allVideos = data.map(video => {
+            return {
+              _id: video._id,
+              title: video.title,
+              thumbnail: video.thumbnail,
+              url: video.url,
+              subject: video.subject
+            }
+          });
+
+          console.log(allVideos);
+          res.render('images', {images: allFiles, videos: allVideos});
+        })
+
+
     })
 
-
-
-
   })
+
+
+router.get('/websites', (req, res, next) => {
+  let allWebsites = [];
+  Post.find({subject: 'WEB'}).then(websites => {
+    allWebsites = websites.map(website => {
+      return {
+        _id: website._id,
+        title: website.title,
+        thumbnail: website.thumbnail,
+        url: website.url,
+        subject: website.subject
+      }
+    });
+
+    res.render('websites', {websites: allWebsites});
+  })
+})
+
+router.get('/drawings', (req, res, next) => {
+  Photo.find({subject: 'STR'}).then(drawings => {
+    let allGroups = [...new Set(drawings.map(item => item.group))];
+    let allImages = drawings;
+    let groupedImages = [];
+
+    for (let i = 0; i < allGroups.length; i++) {
+      const thisGroup = allGroups[i];
+      let galleryImages = [];
+      allImages.forEach(image => {
+        if (image.group === thisGroup) {
+          galleryImages.push(`data:image/jpg;base64,${image.data}`);
+        }
+      });
+      groupedImages[thisGroup] = galleryImages;
+    }
+    res.render('drawings', {groups: groupedImages});
+  })
+})
 
 
 module.exports = router;

@@ -8,12 +8,31 @@
     <title>Lko aplikace</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.3.1/dist/css/uikit.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-    <link rel="stylesheet" href="../../views_assets/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <style>
+        #main-wrapper {
+            max-width: 1220px;
+            display: block;
+            margin: 0 auto;
+        }
+        #main-wrapper,
+        #main-wrapper h1,
+        #main-wrapper h2,
+        #main-wrapper h3,
+        #main-wrapper a{
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 </head>
 <body>
+        <div id="main-wrapper">
+            {{>header}}
+            {{{body}}}
+        </div>
+        <footer>
+            {{>footer}}
+        </footer>
 
-        {{{body}}}
-        {{>footer}}
 
     <script
             src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -24,6 +43,15 @@
     <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+        <script>
+            let width = $('.thumbnail-image').width();
+            let height = $('.thumbnail-image').height();
+            if(height > width) {
+                $('.thumbnail-image').css({
+                    'height': width + 'px',
+                })
+            }
+        </script>
 
 </body>
 </html>

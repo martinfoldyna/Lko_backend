@@ -28,7 +28,8 @@ const postSchema = new mongoose.Schema({
     images: {
         type: Buffer,
         contentType: String
-    }
+    },
+    classYear: Number
 })
 
 module.exports = mongoose.model('Post', postSchema);

@@ -14,9 +14,7 @@ module.exports = {
     key_value: function(obj, options) {
         var buffer = "",
             key;
-        console.log(obj);
         for (key in obj) {
-            console.log(obj);
             if (obj.hasOwnProperty(key)) {
                 buffer += options.fn({key: key, value: obj[key]});
             }
@@ -46,6 +44,20 @@ module.exports = {
         console.log(buffer);
 
         return buffer;
+    },
+    groupImages: function (val, options) {
+        let groupedImages;
+        groupedImages = [];
+
+        options.forEach(key => {
+            val.forEach(context => {
+                if(context.group === options) {
+                    groupedImages.push(context);
+                }
+            })
+        })
+
+        return groupedImages;
     }
 
 }

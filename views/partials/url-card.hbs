@@ -1,15 +1,20 @@
 <style>
     .rounder-corners {
         border-radius: 20px !important;
+        overflow: hidden;
+    }
+    .thumbnail-image {
+        width: 100%;
+        object-fit: cover;
     }
 </style>
 <div>
-    <a href="{{url}}" style="color: inherit; text-decoration: none;" target="_blank">
+    <a href="{{url}}" style="color: inherit; text-decoration: none;" target="_blank" >
         <div class="uk-card uk-card-default uk-card-hover rounder-corners">
             <div class="uk-card-media-top">
 
                 <div class="uk-overflow-hidden">
-                    <img src="data:image/jpg;base64,{{thumbnail}}" alt="" class="uk-animation-kenburns">
+                    <img src="data:image/jpg;base64,{{thumbnail}}" alt="" class="thumbnail-image">
                 </div>
 
             </div>
@@ -20,3 +25,6 @@
         </div>
     </a>
 </div>
+<script>
+
+</script>

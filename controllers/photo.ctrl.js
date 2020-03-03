@@ -14,8 +14,7 @@ let gfs;
         let fileKeys = Object.keys(req.files);
         let files = [];
         let subject = req.body.subject;
-        let group = req.body.group;
-        let docId = req.body.docId;
+        let classYear = req.body.classYear;
 
         fileKeys.forEach((key) => {
             files.push(req.files[key]);
@@ -33,15 +32,22 @@ let gfs;
                 name: file.name,
                 type: file.mimeType,
                 data: file.data.toString('base64'),
-                orientation: file.orientation
-            })
+                orientation: file.orientation,
+                subject: subject,
+            });
             console.log(req.app.get('user'));
             if(req.app.get('user')) {
                 newFile.createdBy = req.app.get('user');
                 newFile.createdAt = Date.now();
             }
-            if(subject) {
-                newFile.subject = subject;
+
+            if(newFile.name.includes('th_')) {
+                newFile.thumbnail = true;
+            }
+
+
+            if(classYear) {
+                newFile.classYear = classYear;
             }
 
             if(subject === "STR") {
@@ -59,7 +65,8 @@ let gfs;
     }
 
     module.exports.retrievePhotos = (req, res, next) => {
-        let subject = req.params.subject
+        let subject = req.params.subject;
+        let filter = req.params.filter;
 
         let findImages = subject === "all" ?  Photo.find({}) : Photo.find({subject: subject});
 
@@ -68,8 +75,12 @@ let gfs;
 
                 let responseBody = [];
 
+                function  returnType(filter, image) {
+                    return filter === "thumbs" ? image.thumbnail : true;
+                }
+
                 docs.forEach(image => {
-                    if(!image.doc_id){
+                    if(!image.doc_id && returnType(filter, image)){
                         responseBody.push({
                             _id: image._id,
                             filename: image.name,
@@ -77,12 +88,36 @@ let gfs;
                             orientation: image.orientation,
                             createdAt: image.createdAt,
                             createdBy: image.createdBy,
-                            group: image.group
+                            group: image.group,
+                            classYear: image.classYear
                         });
                     }
                 })
                 res.json(responseBody);
             })
+    }
+
+    module.exports.retrieveGroup = (req, res, next) => {
+        let group = req.params.group;
+
+        Photo.find({group: group}).then(images => {
+            responseBody = [];
+            images.forEach(image => {
+                if(!image.thumbnail) {
+                    responseBody.push({
+                        _id: image._id,
+                        filename: image.name,
+                        base64: image.data.toString('base64'),
+                        orientation: image.orientation,
+                        createdAt: image.createdAt,
+                        createdBy: image.createdBy,
+                        group: image.group,
+                        classYear: image.classYear
+                    });
+                }
+            })
+            res.send(responseBody);
+        })
     }
 
     module.exports.deleteGroup = (req, res, next) => {

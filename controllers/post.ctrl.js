@@ -20,7 +20,8 @@ module.exports.add = (req, res, next) => {
         createdAt: Date.now(),
         createdBy: user,
         thumbnail: thumbnail.data.toString('base64'),
-        subject: req.params.subject
+        subject: req.params.subject,
+        classYear: requestBody.classYear,
     })
 
     if(requestBody.url) {

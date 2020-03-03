@@ -20,28 +20,6 @@
         transform: scale(1, 1);
     }
 
-
-
-    .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.55);
-        opacity: 0;
-        transition: all .5s;
-        cursor: pointer;
-    }
-
-    .overlay-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #fff;
-    }
-
     .overlay-container ion-icon {
         font-size: 2em;
     }
@@ -59,11 +37,11 @@
         /* Prevent vertical gaps */
         line-height: 0;
 
-        -webkit-column-count: 3;
+        -webkit-column-count: 2;
         -webkit-column-gap:   0px;
-        -moz-column-count:    3;
+        -moz-column-count:    2;
         -moz-column-gap:      0px;
-        column-count:         3;
+        column-count:         2;
         column-gap:           0px;
     }
 
@@ -87,9 +65,18 @@
     #photos div:hover a img {
         transform: scale(1, 1);
     }
+
+    .home span {
+        transition: all .5s;
+    }
+
+    .home:hover span{
+        opacity: .8;
+    }
 </style>
 <section id="images">
-    <h2 class="text-center">obrázky</h2>
+    <a href="/public/" class="home"><span class="uk-margin-small-right back-icon uk-text-primary uk-text-background" uk-icon="icon: home; ratio: 2"></span></a>
+    <h2>obrázky</h2>
     <div class="container-fluid">
         <div id="photos">
             {{# each images}}
@@ -103,9 +90,30 @@
             {{/each}}
         </div>
     </div>
-    <div class="row">
-        <div class="col text-center">
-            <a href="/public/" class="uk-button uk-button-primary centered-button">zpět</a>
+    <h2>videa</h2>
+    <div class="container-fluid">
+        <div id="videos">
+            <div class="uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid >
+            {{# each videos}}
+                <div>
+                    <a href="{{url}}" style="color: inherit; text-decoration: none;" target="_blank" >
+                        <div class="uk-card uk-card-default uk-card-hover rounder-corners">
+                            <div class="uk-card-media-top">
+
+                                <div class="uk-overflow-hidden">
+                                    <img src="data:image/jpg;base64,{{thumbnail}}" alt="" class="thumbnail-image">
+                                </div>
+
+                            </div>
+                            <div class="uk-card-body">
+                                <h2 class="uk-card-title">{{title}}</h2>
+                                <code class="uk-text-primary">#video</code>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {{/each}}
+            </div>
         </div>
     </div>
 </section>

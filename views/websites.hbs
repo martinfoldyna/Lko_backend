@@ -1,0 +1,11 @@
+<a href="/public/" class="home"><span class="uk-margin-small-right back-icon uk-text-primary uk-text-background" uk-icon="icon: home; ratio: 2"></span></a>
+<h2>Webové stránky</h2>
+<div class="row">
+    <div class="uk-child-width-1-2@s uk-child-width-1-4@m" uk-grid >
+        {{#each websites}}
+
+            {{>url-card input=this}}
+
+        {{/each}}
+    </div>
+</div>

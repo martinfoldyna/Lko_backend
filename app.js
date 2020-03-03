@@ -59,7 +59,7 @@ app.use(busboyBodyParser())
 app.use(bodyParser.urlencoded({extended: false}));
 // app.use(bodyParser.json({ limit: '50mb' }));
 // app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views_assets')));
 app.use(cookieParser('jjlkkk'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -75,6 +75,7 @@ app.use(function(req, res, next){
 
 
 })
+
 
 require('./routes/config.routes')(app);
 
@@ -99,9 +100,19 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+
+  let splittedUrl = req.originalUrl.split('/');
+  if(splittedUrl.indexOf('public') >= 0) {
+    //redirect to main public page, when 404 on public routes
+    res.status(err.status || 500);
+    res.redirect('/public/');
+  } else {
+    // render the not found page, when 404 on api routes
+    res.status(err.status || 500);
+    res.render('error');
+  }
+
+
 });
 
 module.exports = app;

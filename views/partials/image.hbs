@@ -1,20 +1,23 @@
 <style>
     .rounded-corners {
         border-radius: 20px !important;
+        overflow: hidden;
     }
 </style>
 <div>
+
     <div class="uk-card uk-card-default uk-card-hover rounded-corners">
         <div class="uk-card-media-top">
-
             <div class="uk-overflow-hidden">
-                <img src="data:image/jpg;base64,{{data}}" alt="" class="uk-animation-kenburns">
+                <img src="data:image/jpg;base64,{{data}}" alt="" class="uk-animation-kenburns thumbnail-image">
             </div>
-
         </div>
         <div class="uk-card-body">
             <h3 class="uk-card-title">{{name}}</h3>
             <code class="uk-text-primary">#foto</code>
+            {{#if classYear}}
+                <code class="uk-text-primary">#{{classYear}}. ročník</code>
+            {{/if}}
         </div>
     </div>
 </div>

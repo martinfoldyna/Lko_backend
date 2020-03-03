@@ -29,10 +29,12 @@ const photosSchema = new mongoose.Schema({
     },
     data: String,
     originalImg: String,
+    thumbnail: Boolean,
     group: String,
     subject: String,
     createdBy: Object,
-    createdAt: Date
+    createdAt: Date,
+    classYear: Number
 });
 
 module.exports = mongoose.model('Photo', photosSchema);

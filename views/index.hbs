@@ -1,47 +1,11 @@
 <style>
 
-    .uk-card-default {
-        transition: all .5s;
-        overflow: hidden;
-    }
-
-    .uk-card-default:hover {
-        transform: scale(1.01, 1.01);
-    }
-
-    #main-wrapper {
-        max-width: 1220px;
-        display: block;
-        margin: 0 auto;
-    }
-
     #main-wrapper p {
         font-size: 1.1rem;
     }
 
     .rounder-corners {
         border-radius: 20px !important;
-    }
-
-    #main-wrapper,
-    #main-wrapper h1,
-    #main-wrapper h2,
-    #main-wrapper h3,
-    #main-wrapper a{
-        font-family: 'Poppins', sans-serif;
-    }
-
-
-    #main-header {
-        width: 80%;
-        display: block;
-        margin: 0 auto;
-        padding-bottom: .8em;
-    }
-
-    .main-heading {
-        padding-top: 2em;
-        font-weight: 700;
     }
 
     .text-uppercase {
@@ -60,86 +24,88 @@
         box-shadow: 0 14px 25px rgba(0,0,0,.16);
     }
 </style>
-<div id="main-wrapper">
-    <header id="main-header">
-        <h1 class="main-heading">Technické lyceum</h1>
-        <p>Technické lyceum je koncipováno jako odborné technické studium s vyšším podílem všeobecného vzdělávání a výrazným zastoupením těch vzdělávacích oblastí, které jsou obsahem i metodami práce významné pro rozvoj technického myšlení.</p>
 
-        <p>Obor je určený pro chlapce a dívky se zájmem o přírodní vědy, matematiku a geometrii, informatiku, techniku a technologii. Výuka v tomto oboru nabízí přípravu pro další vysokoškolské studium technických a přírodovědných oborů. Charakteristickými znaky technického lycea je výuka dvou cizích jazyků a také to, že součástí maturitní zkoušky je obhajoba dlouhodobé maturitní práce.</p>
-    </header>
-    <hr>
-<section id="subjects">
-    <h3 class="text-uppercase">Multimédia</h3>
-    <div style="max-width: 95%; display: block; margin: 0 auto;">
-        <div class="row">
-            <div class="uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid >
-                {{# each videos}}
-                    {{>url-card input=this}}
+    <main>
+        <section id="subjects">
+            <h3 class="text-uppercase">Multimédia</h3>
+            <div style="max-width: 95%; display: block; margin: 0 auto;">
+                <div class="row">
+                    <div class="uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid >
+                        {{# each videos}}
+                            {{>url-card input=this}}
 
-                {{/each}}
+                        {{/each}}
 
-                {{# each images}}
+                        {{# each images}}
+                            {{>image input=this}}
 
-                    {{>image input=this}}
+                        {{/each}}
 
-                {{/each}}
-
-
-            </div>
-        </div>
-        <div class="">
-            <a href="/public/images" class="uk-button uk-button-primary rounder-corners link-button">Zobrazit více</a>
-        </div>
-    </div>
-
-    <hr class="uk-divider-icon">
-
-    <h3 class="text-uppercase">Webové stránky</h3>
-    <div class="row" style="max-width: 95%; display: block; margin: 0 auto;">
-        <div class="uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid >
-            {{# each websites}}
-
-                {{>url-card input=this}}
-
-
-            {{/each}}
-        </div>
-        <div class="">
-            <a href="/public/images" class="uk-button uk-button-primary rounder-corners link-button">Zobrazit více</a>
-        </div>
-    </div>
-
-    <hr class="uk-divider-icon">
-    <h3 class="text-uppercase">Technické výkresy</h3>
-    <div class="row" style="max-width: 95%; display: block; margin: 0 auto;">
-        <div class="uk-child-width-1-4@s uk-grid-small" uk-grid >
-            {{# each drawings}}
-
-                <div>
-                    <div class="uk-card-default uk-card-hover uk-card-body">
-                        <div class="uk-card-media-top uk-light">
-
-                            <div class="uk-overflow-hidden">
-                                <img src="data:image/jpg;base64,{{thumbnail}}" alt="" class="uk-animation-kenburns">
-
-                            </div>
-
-                        </div>
-                        <h3 class="uk-card-title">{{title}}</h3>
-                        <code class="uk-text-primary">#výkresy</code>
 
                     </div>
                 </div>
+                <div class="">
+                    <a href="/public/images" class="uk-button uk-button-primary rounder-corners link-button">Zobrazit více</a>
+                </div>
+            </div>
 
-            {{/each}}
-        </div>
-        <div>
-            <a href="/public/images" class="uk-button uk-button-primary rounder-corners link-button">Zobrazit více</a>
-        </div>
-    </div>
+            <hr class="uk-divider-icon">
 
-</section>
-</div>
+            <h3 class="text-uppercase">Webové stránky</h3>
+            <div class="row" style="max-width: 95%; display: block; margin: 0 auto;">
+                <div class="uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid >
+                    {{# each websites}}
+
+                        {{>url-card input=this}}
+
+
+                    {{/each}}
+                </div>
+                <div class="">
+                    <a href="/public/websites" class="uk-button uk-button-primary rounder-corners link-button">Zobrazit více</a>
+                </div>
+            </div>
+
+            <hr class="uk-divider-icon">
+            <h3 class="text-uppercase">Technické výkresy</h3>
+            <div class="row" style="max-width: 95%; display: block; margin: 0 auto;">
+                <div class="uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid >
+                    {{# key_value drawings}}
+                        <div class="uk-card uk-card-default uk-card-hover rounder-corners">
+                            <div class="uk-card-media-top">
+                                <div class="uk-overflow-hidden">
+                                    <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
+
+                                        <ul class="uk-slideshow-items" style="min-height: 100%!important;width:100%;">
+                                            {{#each value}}
+                                                <li>
+                                                    <img data-src="{{this}}" style="width: 100%; object-fit: contain" alt="" uk-cover uk-img="target: !.uk-slideshow-items">
+                                                </li>
+                                            {{/each}}
+                                        </ul>
+
+                                        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+                                        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-card-body">
+                                <h3>{{key}}</h3>
+                            </div>
+                        </div>
+
+                    {{/ key_value}}
+
+
+                </div>
+                <div>
+                    <a href="/public/drawings" class="uk-button uk-button-primary rounder-corners link-button">Zobrazit více</a>
+                </div>
+            </div>
+
+        </section>
+    </main>
 
 <!--<div id="nb-global-spinner" class="spinner" style="width: 200px;">-->
 <!--    <img src="../views_assets/img/logo.svg" alt="" uk-svg="stroke-animation: true">-->
