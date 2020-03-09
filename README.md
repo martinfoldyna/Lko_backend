@@ -27,16 +27,16 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Nyní jste úspěšně přihlášen(a)',
-    status: 200,
-    success: true
+    "message": 'Nyní jste úspěšně přihlášen(a)',
+    "status": 200,
+    "success": true
 },
 user: {
-    name: "Martin Foldyna"
-    picture: "https://lh3.googleusercontent.com/a-/AOh14GjBTwfgT60PBPGKtHqZ8FCRPO-LaK0RQ1K-DtR5=s96-c"
-    email: "martin.foldyna@pslib.cz"
-    role: "Teacher"
-    token: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZDU1ZmY0ZTEwOTkxZDZiMGVmZDM5MmI5MWEzM2U1NGMwZTIxOGIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjMxODMxOTgwNDAtdDdrcTYwb2Njam84dXFwYzYwYm1hc2c2ZzBzMnI0MnAuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI2MzE4MzE5ODA0MC10N2txNjBvY2Nqbzh1cXBjNjBibWFzZzZnMHMycjQycC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwMTM0MDM0NDEwNDg2MTAyMDc3MiIsImhkIjoicHNsaWIuY3oiLCJlbWFpbCI6Im1hcnRpbi5mb2xkeW5hQHBzbGliLmN6IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiI4SmJYSnowTXkwSFNEZThvR3dRczZBIiwibmFtZSI6Ik1hcnRpbiBGb2xkeW5hIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BT2gxNEdqQlR3ZmdUNjBQQlBHS3RIcVo4RkNSUE8tTGFLMFJRMUstRHRSNT1zOTYtYyIsImdpdmVuX25hbWUiOiJNYXJ0aW4iLCJmYW1pbHlfbmFtZSI6IkZvbGR5bmEiLCJsb2NhbGUiOiJjcyIsImlhdCI6MTU4MzY5MTQ4OSwiZXhwIjoxNTgzNjk1MDg5LCJqdGkiOiJiZDllOTY4YzYzYzJhZmIyYThkZDczYzg4NmY0OWY0NDNjZDJlYWIzIn0.irNMTVdMBuNKFmDIVXzu0gMJh0yF8wAeI-qlasV3o44UkW5x_TBMsaA0iKP32gX7LRfnhf3jNU7u_Qufh8kmLZGSp23UICUDkRSkNJYvAIEs014hYXYOYZCgeBlblo6qA31ApK7T2hNo3iAvFB5bZARRonCcs70xGuJfeAPj1r212fvK37YSSsKZ2n4bjJx2vJeYWqPqMg10XsGtFIvHSGbNiIb7LntIUYWKbLwEXeigRuA_y6oVp8AOZcXgwikPuulhjga4uV-ItE2kzxxpJH0sQ95TeyXijL_Ucyj2DR7qG1A0PChfEWxC3uurFTmhQ4dop2KjbjDfSLoYkgqtig"
+    "name": "Martin Foldyna"
+    "picture": "https://lh3.googleusercontent.com/a-/AOh14GjBTwfgT60PBPGKtHqZ8FCRPO-LaK0RQ1K-DtR5=s96-c"
+    "email": "martin.foldyna@pslib.cz"
+    "role": "Teacher"
+    "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZDU1ZmY0ZTEwOTkxZDZiMGVmZDM5MmI5MWEzM2U1NGMwZTIxOGIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjMxODMxOTgwNDAtdDdrcTYwb2Njam84dXFwYzYwYm1hc2c2ZzBzMnI0MnAuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI2MzE4MzE5ODA0MC10N2txNjBvY2Nqbzh1cXBjNjBibWFzZzZnMHMycjQycC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwMTM0MDM0NDEwNDg2MTAyMDc3MiIsImhkIjoicHNsaWIuY3oiLCJlbWFpbCI6Im1hcnRpbi5mb2xkeW5hQHBzbGliLmN6IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiI4SmJYSnowTXkwSFNEZThvR3dRczZBIiwibmFtZSI6Ik1hcnRpbiBGb2xkeW5hIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BT2gxNEdqQlR3ZmdUNjBQQlBHS3RIcVo4RkNSUE8tTGFLMFJRMUstRHRSNT1zOTYtYyIsImdpdmVuX25hbWUiOiJNYXJ0aW4iLCJmYW1pbHlfbmFtZSI6IkZvbGR5bmEiLCJsb2NhbGUiOiJjcyIsImlhdCI6MTU4MzY5MTQ4OSwiZXhwIjoxNTgzNjk1MDg5LCJqdGkiOiJiZDllOTY4YzYzYzJhZmIyYThkZDczYzg4NmY0OWY0NDNjZDJlYWIzIn0.irNMTVdMBuNKFmDIVXzu0gMJh0yF8wAeI-qlasV3o44UkW5x_TBMsaA0iKP32gX7LRfnhf3jNU7u_Qufh8kmLZGSp23UICUDkRSkNJYvAIEs014hYXYOYZCgeBlblo6qA31ApK7T2hNo3iAvFB5bZARRonCcs70xGuJfeAPj1r212fvK37YSSsKZ2n4bjJx2vJeYWqPqMg10XsGtFIvHSGbNiIb7LntIUYWKbLwEXeigRuA_y6oVp8AOZcXgwikPuulhjga4uV-ItE2kzxxpJH0sQ95TeyXijL_Ucyj2DR7qG1A0PChfEWxC3uurFTmhQ4dop2KjbjDfSLoYkgqtig"
 }
 ```
 
@@ -47,9 +47,9 @@ Status kód: **403**
 - Uživatel nepoužil k přihlášení email @pslib.cz.
 ```json
 code: {
-    message: 'K přihlášení použijte @pslib.cz, @pslib.cloud, @365.pslib.cz účet.',
-    status: 403,
-    success: false
+    "message": 'K přihlášení použijte @pslib.cz, @pslib.cloud, @365.pslib.cz účet.',
+    "status": 403,
+    "success": false
 },
 user: null
 ```
@@ -114,16 +114,16 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Uživatel byl oprávněn ke vstupu do aplikace.',
-    status: 200,
-    success: true
+    "message": 'Uživatel byl oprávněn ke vstupu do aplikace.',
+    "status": 200,
+    "success": true
 },
 user: {
-    _id : ObjectId("5e59452146f3a471b1584d37"),
-    email : "martin.foldyna@365.pslib.cz",
-    name : "Foldyna Martin",
-    state : "authorised",
-    role : "Teacher",
+    "_id": ObjectId("5e59452146f3a471b1584d37"),
+    "email" : "martin.foldyna@365.pslib.cz",
+    "name": "Foldyna Martin",
+    "state" : "authorised",
+    "role" : "Teacher",
 }
 ```
 
