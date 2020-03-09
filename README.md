@@ -27,7 +27,7 @@ Status kód: **200**
 
 ```json
 code: {
-    "message": 'Nyní jste úspěšně přihlášen(a)',
+    "message": "Nyní jste úspěšně přihlášen(a)",
     "status": 200,
     "success": true
 },
