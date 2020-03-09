@@ -23,8 +23,8 @@ router.get('/', function(req, res, next) {
 
       let allPosts = data;
 
-    allWebsites = data.filter(article => {
-      if(article.subject === "WEB") {
+    allWebsites = data.filter((article, index) => {
+      if(article.subject === "WEB" && index < 3) {
         return true;
       } else {
         return false;
@@ -43,8 +43,7 @@ router.get('/', function(req, res, next) {
     Photo.find().then(images => {
 
       allnonThumnailsImages = images.filter(function (img, index) {
-        // return img.subject ==="MME" && !img.originalImg && index < 3;
-        return img.subject ==="MME" && img.thumbnail;
+        return img.subject ==="MME" && index > 3 && img.thumbnail && !img.group;
       }).map(file => {
 
         if (file.data !== undefined && !file.doc_id) {
@@ -72,7 +71,7 @@ router.get('/', function(req, res, next) {
 
 
         let allVideos = allPosts.filter((video, index) => {
-          if(index < 3) {
+          if(index < 3 && video.subject === "MME") {
             return true;
           } else {
             return false;
@@ -121,6 +120,7 @@ router.get('/images', (req, res) => {
           return false;
         }).map(file => {
 
+
         if (file.data !== undefined && !file.doc_id) {
           let image = {
             _id: file._id,
@@ -128,12 +128,16 @@ router.get('/images', (req, res) => {
             name: file.name,
             data: file.data,
             subject: file.subject,
+            classYear: file.classYear+1
           }
           return image
         } else {
           return ''
         }
       })
+
+        let allClassYears = [...new Set(allFiles.map(item => item.classYear))];
+
         Post.find({subject: "MME"}).then(data => {
 
           let allVideos = data.map(video => {
@@ -146,8 +150,8 @@ router.get('/images', (req, res) => {
             }
           });
 
-          console.log(allVideos);
-          res.render('images', {images: allFiles, videos: allVideos});
+          // console.log(allFiles);
+          res.render('images', {images: allFiles, classYears: allClassYears, videos: allVideos});
         })
 
 

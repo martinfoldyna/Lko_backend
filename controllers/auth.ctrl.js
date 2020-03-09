@@ -1,47 +1,9 @@
 const jwt = require('jsonwebtoken');
 const verifier = require('google-id-token-verifier');
 const AuthorisedUser = require('./../models/authorisedUser.model');
+const messages = require('./../config/messages.helper')
 
 require('dotenv').config();
-
-module.exports.register = (req, res, next) => {
-    User.findOne({email: req.body.email}).exec()
-        .then(user => {
-            if(user) return res.status(400).send('User already exists!')
-
-            const newUser = new User({
-                name: req.body.name,
-                email: req.body.email,
-                username: req.body.username,
-                password: req.body.password
-            });
-            newUser.save((err, doc) => {
-                if (err) return next(err);
-
-                return res.status(200).send('User created!');
-            })
-        })
-}
-
-module.exports.login = (req, res, next) => {
-    console.log(req.headers)
-    User.findOne({username: req.body.username}).exec()
-        .then(user => {
-            if(!user) res.status(400).send('User not found');
-            let token = jwt.sign({username: user.username}, process.env.SECRET, {
-                expiresIn: '30m'
-            })
-            req.app.set('user', user);
-            res.json({
-                user: req.user,
-                token: token
-
-            })
-        })
-        .catch(err => {
-            next(err);
-        })
-}
 
 module.exports.googleLogin = function(req, res, next) {
     let idToken = req.body.idToken;
@@ -52,8 +14,8 @@ module.exports.googleLogin = function(req, res, next) {
         if (!err) {
             let splittedName = tokenInfo.email.split('@');
             if(splittedName[1] === "pslib.cz" || splittedName[1] === "pslib.cloud" || splittedName[1] === "365.pslib.cz") {
-                AuthorisedUser.findOne({email: tokenInfo.email, state: 'authorised'}).then(user => {
-                    if(user) {
+                AuthorisedUser.findOne({email: tokenInfo.email}).then(user => {
+                    if(user && user.state === 'authorised') {
                         // use tokenInfo in here.
                         let responseBody = {
                             name: tokenInfo.name,
@@ -63,8 +25,16 @@ module.exports.googleLogin = function(req, res, next) {
                             token: idToken
                         }
                         req.app.set('user', responseBody);
-                        res.send(responseBody);
+                        res.status(messages.AUTH.LOGIN.SUCCESS.status).json({
+                            code: messages.AUTH.LOGIN.SUCCESS,
+                            user: responseBody
+                        })
                         console.log(tokenInfo);
+                    } else if(user && user.state === "unauthorised") {
+                        res.status(messages.AUTH.WAIT_FOR_VERIFICATION.status).json({
+                            code: messages.AUTH.WAIT_FOR_VERIFICATION,
+                            user: null
+                        })
                     } else {
                         // res.send('User not authorised');
                         let newUser = new AuthorisedUser({
@@ -77,12 +47,18 @@ module.exports.googleLogin = function(req, res, next) {
                             if(err) {
                                 return next(err);
                             }
-                            res.send('new authorised user saved!')
+                            res.status(messages.AUTH.WAIT_FOR_VERIFICATION.status).json({
+                                code: messages.AUTH.WAIT_FOR_VERIFICATION,
+                                user: null
+                            })
                         })
                     }
                 })
             } else {
-                res.status(500).send("K přihlášení použijte @pslib.cz, @pslib.cloud, @365.pslib.cz účet.");
+                res.status(messages.AUTH.USE_ANOTHER_USER.status).json({
+                    code: messages.AUTH.USE_ANOTHER_USER,
+                    user: null
+                })
             }
 
         } else {
@@ -112,9 +88,17 @@ module.exports.microsoftLogin = (req, res, next) => {
                         if(err) {
                             return next(err);
                         }
-                        res.send('all users were saved!')
+                        res.status(messages.AUTH.WAIT_FOR_VERIFICATION.status).json({
+                            code: messages.AUTH.WAIT_FOR_VERIFICATION,
+                            user: null
+                        })
                     })
 
+                } else if(user && user.state === "unauthorised") {
+                    res.status(messages.AUTH.WAIT_FOR_VERIFICATION.status).json({
+                        code: messages.AUTH.WAIT_FOR_VERIFICATION,
+                        user: null
+                    })
                 } else {
                     // use tokenInfo in here.
                     let responseBody = {
@@ -123,14 +107,20 @@ module.exports.microsoftLogin = (req, res, next) => {
                         role: user.role
                     }
                     req.app.set('user', responseBody);
-                    res.send(responseBody);
+                    res.status(messages.AUTH.LOGIN.SUCCESS.status).json({
+                        code: messages.AUTH.LOGIN.SUCCESS,
+                        user: responseBody
+                    })
 
                 }
             }, err => {
                 return next(err);
             })
         } else {
-            res.status(500).send('K přihlášení musíte použít účet 365.pslib.cz');
+            res.status(messages.AUTH.USE_ANOTHER_USER.status).json({
+                code: messages.AUTH.USE_ANOTHER_USER,
+                user: null
+            })
         }
 
     });
@@ -149,8 +139,8 @@ module.exports.authorise = (req, res, next) => {
                     return next(err);
                 }
 
-                res.send({
-                    message: 'User authorised',
+                res.status(messages.USER.AUTHORISED.status).send({
+                    code: messages.USER.AUTHORISED,
                     user: data
                 })
             })
@@ -158,7 +148,10 @@ module.exports.authorise = (req, res, next) => {
             return next(err);
         })
     } else {
-        res.send('Nemáte oprávnění k autorizování uživatelů.');
+        res.status(messages.USER.NOT_AUTHORISED.status).send({
+            code: messages.USER.NOT_AUTHORISED,
+            user: null
+        })
     }
 }
 
@@ -173,8 +166,8 @@ module.exports.deauthorise = (req, res, next) => {
                     return next(err);
                 }
 
-                res.send({
-                    message: 'User deauthorised',
+                res.status(messages.USER.DEAUTHORISED.status).send({
+                    code: messages.USER.DEAUTHORISED,
                     user: data
                 })
             })
@@ -182,7 +175,10 @@ module.exports.deauthorise = (req, res, next) => {
             return next(err);
         })
     } else {
-        res.send('Nemáte oprávnění k deautorizování uživatelů.');
+        res.status(messages.USER.NOT_AUTHORISED.status).send({
+            code: messages.USER.NOT_AUTHORISED,
+            user: null
+        })
     }
 }
 
@@ -192,7 +188,10 @@ module.exports.delete = (req, res, next) => {
             return next(err);
         }
 
-        res.send(results);
+        res.status(messages.USER.DELETED.status).send({
+            code: messages.USER.DELETED,
+            result: result
+        })
     })
 
 }

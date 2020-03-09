@@ -8,12 +8,11 @@ const session = require('express-session');
 const passport = require('passport');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const fileUpload = require('express-fileupload');
-const mongoConfig = require('./config/mongo.settings');
 const busboyBodyParser = require('busboy-body-parser');
 const handlebarsHelpers = require('handlebars-helpers');
 const customHelpers = require('./config/customHelpers');
 const exphbs = require('express-handlebars');
+const jwt = require('jsonwebtoken');
 
 // const MomentHandler = require('handlebars.moment')();
 
@@ -69,17 +68,35 @@ app.use(session({ secret: 'anything', resave: true,
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport.settings')(passport);
-app.use(function(req, res, next){
-  res.locals.user = req.user || null
-  next();
 
-
-})
-
+// AUTHENTICATION
+// app.use(async (req, res, next) => {
+//   let splittedUrl = req.originalUrl.split('/');
+//     if((splittedUrl.indexOf('api') >= 0) && splittedUrl.indexOf('login') < 0) {
+//       if(req.headers.authorization){
+//         const splittedToken = req.headers.authorization.split(' ');
+//         const provider = splittedToken[1];
+//         const token = splittedToken[2];
+//         let secrete = process.env[`TOKEN_STRATEGY_${provider.toUpperCase()}`]
+//         await jwt.verify(token, secrete, {}, (err, tokenInfo) => {
+//           if(tokenInfo){
+//             return req.next();
+//           }
+//           if (err) {
+//             return res.status(500).send(err);
+//           }
+//         });
+//       } else {
+//         res.status(401).send('Nejste oprávněn pro tento přístup.')
+//       }
+//     } else {
+//       req.next();
+//     }
+//
+// })
 
 require('./routes/config.routes')(app);
 
-// app.use(fileUpload());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -100,9 +117,8 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-
   let splittedUrl = req.originalUrl.split('/');
-  if(splittedUrl.indexOf('public') >= 0) {
+  if((splittedUrl.indexOf('public') >= 0)) {
     //redirect to main public page, when 404 on public routes
     res.status(err.status || 500);
     res.redirect('/public/');

@@ -3,8 +3,6 @@ const AuthCtrl = require('./../controllers/auth.ctrl');
 const passport = require('passport');
 
 
-router.post('/register', AuthCtrl.register);
-router.post('/login', passport.authenticate('local'), AuthCtrl.login);
 router.post('/google/login', AuthCtrl.googleLogin);
 router.post('/microsoft/login', AuthCtrl.microsoftLogin);
 router.post('/authorise/:id', AuthCtrl.authorise);

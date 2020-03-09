@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const fs = require('fs');
-const fileType = require('file-type');
 const Photo = require('../models/photo.model');
+const messages = require('./../config/messages.helper')
+
 
 let Grid = require('gridfs-stream');
 eval(`Grid.prototype.findOne = ${Grid.prototype.findOne.toString().replace('nextObject', 'next')}`);
@@ -9,7 +9,11 @@ let conn = mongoose.connection;
 Grid.mongo = mongoose.mongo;
 let gfs;
 
-    module.exports.uploadPhotos = (req, res, next) => {
+/*
+ * Nahrávánní obrázků
+ * @param req: jednotlivé obrázky
+ */
+module.exports.uploadPhotos = (req, res, next) => {
 
         let fileKeys = Object.keys(req.files);
         let files = [];
@@ -59,24 +63,34 @@ let gfs;
             });
         })
 
-        res.send('all files have been uploaded');
+        res.status(messages.PHOTO.ALL_UPLOADED.status).json({
+            code: messages.PHOTO.ALL_UPLOADED,
+        })
 
         res.end();
     }
 
-    module.exports.retrievePhotos = (req, res, next) => {
+/**
+ * Načítání obrázků
+ * @param req: předmět
+ */
+
+module.exports.retrievePhotos = (req, res, next) => {
         let subject = req.params.subject;
         let filter = req.params.filter;
 
         let findImages = subject === "all" ?  Photo.find({}) : Photo.find({subject: subject});
 
         findImages.then(docs => {
-                if(!docs) res.send('files not found');
+                if(!docs) res.status(messages.PHOTO.NOT_FOUND.status).send({
+                    code: messages.PHOTO.NOT_FOUND,
+                    photos: null
+                });
 
                 let responseBody = [];
 
                 function  returnType(filter, image) {
-                    return filter === "thumbs" ? image.thumbnail : true;
+                    return filter === "thumbs" && subject !== "STR" ? image.thumbnail : true;
                 }
 
                 docs.forEach(image => {
@@ -93,8 +107,13 @@ let gfs;
                         });
                     }
                 })
-                res.json(responseBody);
-            })
+                res.status(messages.PHOTO.ALL_LOADED.status).json({
+                    code: messages.PHOTO.ALL_LOADED,
+                    photos: responseBody
+                })
+            }).catch(err => {
+                return next(err);
+        })
     }
 
     module.exports.retrieveGroup = (req, res, next) => {
@@ -103,6 +122,13 @@ let gfs;
         Photo.find({group: group}).then(images => {
             responseBody = [];
             images.forEach(image => {
+                if(!image) {
+                    res.status(messages.PHOTO.NOT_FOUND.status).send({
+                        code: messages.PHOTO.NOT_FOUND,
+                        photos: null
+                    })
+                }
+
                 if(!image.thumbnail) {
                     responseBody.push({
                         _id: image._id,
@@ -116,7 +142,10 @@ let gfs;
                     });
                 }
             })
-            res.send(responseBody);
+            res.status(messages.PHOTO.ALL_LOADED.status).json({
+                code: messages.PHOTO.ALL_LOADED,
+                photos: responseBody
+            })
         })
     }
 
@@ -125,7 +154,10 @@ let gfs;
 
         Photo.remove({group: group}, (err, result) => {
             if(err) return next(err);
-            res.send(result);
+            res.status(messages.PHOTO.ALL_DELETED.status).json({
+                code: messages.PHOTO.ALL_DELETED,
+                result: result
+            })
         })
     }
 
@@ -134,6 +166,9 @@ let gfs;
 
         Photo.deleteOne({_id: imageId}, {}, (err, result) => {
             if(err) return next(err);
-            res.send(result);
+            res.status(messages.PHOTO.ONE_DELETED.status).json({
+                code: messages.PHOTO.ONE_DELETED,
+                result: result
+            })
         })
     }

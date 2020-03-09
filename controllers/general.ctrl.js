@@ -1,9 +1,5 @@
-const Article = require('../models/post.model');
-const Photo = require('./../models/photo.model');
-const Video = require('./../models/video.model');
-const File = require('../models/photo.model');
 const helpers = require('./helpers');
-
+const messages = require('./../config/messages.helper')
 
 module.exports.delete = (req, res, next) => {
     console.log(req.params);
@@ -14,7 +10,16 @@ module.exports.delete = (req, res, next) => {
 
     if(model) {
         model.deleteOne({_id: paramId}).then(doc => {
-            res.send(doc);
+            res.status(messages.POST.DELETED.status).json({
+                code: messages.POST.DELETED,
+                result: doc
+            });
+
+            if(!doc) {
+                res.status(messages.POST.NOT_FOUND.status).json({
+                    code: messages.POST.NOT_FOUND
+                })
+            }
         })
     }
 

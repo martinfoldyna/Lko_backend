@@ -37,11 +37,11 @@
         /* Prevent vertical gaps */
         line-height: 0;
 
-        -webkit-column-count: 2;
+        -webkit-column-count: 3;
         -webkit-column-gap:   0px;
-        -moz-column-count:    2;
+        -moz-column-count:    3;
         -moz-column-gap:      0px;
-        column-count:         2;
+        column-count:         3;
         column-gap:           0px;
     }
 
@@ -77,17 +77,29 @@
 <section id="images">
     <a href="/public/" class="home"><span class="uk-margin-small-right back-icon uk-text-primary uk-text-background" uk-icon="icon: home; ratio: 2"></span></a>
     <h2>obrázky</h2>
+
     <div class="container-fluid">
-        <div id="photos">
-            {{# each images}}
-                {{#if data}}
-                    <div>
-                        <a data-fancybox="gallery" href="data:image/jpg;base64,{{data}}">
-                            <img src="data:image/jpg;base64,{{data}}" alt="">
-                        </a>
-                    </div>
-                {{/if}}
-            {{/each}}
+        <div uk-filter="target: .js-filter">
+
+            <ul class="uk-subnav uk-subnav-pill">
+                <li class="uk-active" uk-filter-control><a href="#">Všechny</a></li>
+                {{# each classYears}}
+                    <li uk-filter-control=".tag-{{this}}year"><a href="#">{{this}}. ročník</a></li>
+                {{/each}}
+            </ul>
+
+            <div id="photos" class="js-filter">
+                {{# each images}}
+                    {{#if data}}
+                        <div class="tag-{{classYear}}year">
+                            <a data-fancybox="gallery" href="data:image/jpg;base64,{{data}}">
+                                <img src="data:image/jpg;base64,{{data}}" alt="">
+                            </a>
+                        </div>
+
+                    {{/if}}
+                {{/each}}
+            </div>
         </div>
     </div>
     <h2>videa</h2>

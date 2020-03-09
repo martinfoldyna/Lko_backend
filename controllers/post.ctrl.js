@@ -1,4 +1,5 @@
 const Post = require('../models/post.model');
+const messages = require('./../config/messages.helper')
 
 module.exports.add = (req, res, next) => {
     if(!req.body) {
@@ -38,7 +39,10 @@ module.exports.add = (req, res, next) => {
             throw err;
         }
 
-        res.status(200).send(doc);
+        res.status(messages.POST.UPLOADED.status).json({
+            code: messages.POST.UPLOADED,
+            post: doc
+        })
     })
 
 }
@@ -47,7 +51,16 @@ module.exports.load = (req, res, next) => {
     let subject = req.params.subject;
     let findArticle = subject === "all" ?  Post.find({}) : Post.find({subject: subject});
     findArticle.then(data => {
-            res.send(data);
+        if(!data) {
+            res.status(messages.POST.NOT_FOUND.status).json({
+                code: messages.POST.NOT_FOUND,
+                post: null
+            })
+        }
+            res.status(messages.POST.ALL_LOADED.status).json({
+                code: messages.POST.ALL_LOADED,
+                post: data
+            })
         }).catch(err => {
             return next(err);
     })
@@ -57,6 +70,12 @@ module.exports.update = (req, res, next) => {
     let articleId = req.params.id;
     let requestBody = req.body;
     Post.findById(articleId).then(data => {
+        if(!data) {
+            res.status(messages.POST.NOT_FOUND.status).json({
+                code: messages.POST.NOT_FOUND,
+                post: null
+            })
+        }
         let appUser = req.app.get('user');
         data.title = requestBody.title;
         data.body = requestBody.body;
@@ -67,10 +86,9 @@ module.exports.update = (req, res, next) => {
         console.log(Date.now());
         data.save().then((data) => {
 
-
-            res.status(200).json({
-                message: 'Post updated',
-                article: data
+            res.status(messages.POST.UPDATED.status).json({
+                code: messages.POST.UPDATED,
+                post: data
             })
         }, err => {
             return next(err);
@@ -80,14 +98,3 @@ module.exports.update = (req, res, next) => {
     })
 }
 
-module.exports.delete = (req, res, next) => {
-    console.log(req.params.id);
-    Post.deleteOne({_id: req.params.id}, {}, (err, results) => {
-        if(err) return next(err);
-        res.send(results)
-    }).catch(err => {
-        return next(err);
-    })
-
-
-}
