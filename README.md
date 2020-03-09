@@ -71,14 +71,14 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Nyní jste úspěšně přihlášen(a)',
-    status: 200,
-    success: true
+    "message": "Nyní jste úspěšně přihlášen(a)",
+    "status": 200,
+    "success": true
 },
 user: {
-    name: "Foldyna Martin"
-    email: "martin.foldyna@365.pslib.cz"
-    role: "Teacher"
+    "name": "Foldyna Martin"
+    "email": "martin.foldyna@365.pslib.cz"
+    "role": "Teacher"
 }
 ```
 
@@ -89,9 +89,9 @@ Status kód: **403**
 - Uživatel nepoužil k přihlášení email @365.pslib.cz nebo @pslib.cloud.
 ```json
 code: {
-    message: 'K přihlášení použijte @pslib.cz, @pslib.cloud, @365.pslib.cz účet.',
-    status: 403,
-    success: false
+    "message": "K přihlášení použijte @pslib.cz, @pslib.cloud, @365.pslib.cz účet.",
+    "status": 403,
+    "success": false
 },
 user: null
 ```
@@ -114,7 +114,7 @@ Status kód: **200**
 
 ```json
 code: {
-    "message": 'Uživatel byl oprávněn ke vstupu do aplikace.',
+    "message": "Uživatel byl oprávněn ke vstupu do aplikace.",
     "status": 200,
     "success": true
 },
@@ -134,9 +134,9 @@ Status kód: **401**
 - Role uživatele, který autorizuje daného uživtele není "teacher" a "admin"
 ```json
 code: {
-    message: 'K této akci nejste oprávněni.',
-    status: 401,
-    success: false
+    "message": "K této akci nejste oprávněni.",
+    "status": 401,
+    "success": false
 },
 user: null
 ```
@@ -159,16 +159,16 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Uživateli bylo odebráno oprávnění k přístupu do aplikace.',
-    status: 200,
-    success: true
+    "message": "Uživateli bylo odebráno oprávnění k přístupu do aplikace.",
+    "status": 200,
+    "success": true
 },
 user: {
-    _id : ObjectId("5e59452146f3a471b1584d37"),
-    email : "martin.foldyna@365.pslib.cz",
-    name : "Foldyna Martin",
-    state : "unauthorised",
-    role : "Teacher",
+    "_id" : ObjectId("5e59452146f3a471b1584d37"),
+    "email" : "martin.foldyna@365.pslib.cz",
+    "name" : "Foldyna Martin",
+    "state" : "unauthorised",
+    "role" : "Teacher",
 }
 ```
 
@@ -179,9 +179,9 @@ Status kód: **401**
 - Role uživatele, který deautorizuje daného uživtele není "teacher" a "admin"
 ```json
 code: {
-    message: 'K této akci nejste oprávněni.',
-    status: 401,
-    success: false
+    "message": "K této akci nejste oprávněni.",
+    "status": 401,
+    "success": false
 },
 user: null
 ```
@@ -209,9 +209,9 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Všechny obrázky byly úspěšně nahrány.',
-    status: 200,
-    success: true
+    "message": "Všechny obrázky byly úspěšně nahrány.",
+    "status": 200,
+    "success": true
 }
 ```
 **Neúspěšný výstup:**
@@ -222,7 +222,7 @@ Status kód: **zaláží na typu erroru**
 
 #### Načítání:
 
-*Metoda:* POST
+*Metoda:* GET
 
 *Cesta:* /retrieve/:subject/:filter
 
@@ -238,25 +238,25 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Všechny obrázky byly načteny.',
-    status: 200,
-    success: true
+    "message": "Všechny obrázky byly načteny.",
+    "status": 200,
+    "success": true
 },
 photos: [
-    {_id: "5e60101762af2c828fe78512"
-    filename: "th_DSC_0379.jpg"
-    base64: "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFR.."
-    orientation: -1
-    createdAt: "2020-03-04T20:31:19.971Z"
-    createdBy: {name: "Foldyna Martin", email: "martin.foldyna@365.pslib.cz", role: "Teacher"}
-    classYear: 3},
-    {_id: "5e60101762af2c828fe78511"
-    filename: "th_DSC_0100.jpg"
-    base64: "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFR.."
-    orientation: -1
-    createdAt: "2020-03-04T20:31:19.405Z"
-    createdBy: {name: "Foldyna Martin", email: "martin.foldyna@365.pslib.cz", role: "Teacher"}
-    classYear: 2},{..}
+    {"_id": "5e60101762af2c828fe78512"
+    "filename": "th_DSC_0379.jpg"
+    "base64": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFR.."
+    "orientation": -1
+    "createdAt": "2020-03-04T20:31:19.971Z"
+    "createdBy": {"name": "Foldyna Martin", "email": "martin.foldyna@365.pslib.cz", "role": "Teacher"}
+    "classYear": 3},
+    {"_id": "5e60101762af2c828fe78511"
+    "filename": "th_DSC_0100.jpg"
+    "base64": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFR.."
+    "orientation": -1
+    "createdAt": "2020-03-04T20:31:19.405Z"
+    "createdBy": {"name": "Foldyna Martin", "email": "martin.foldyna@365.pslib.cz", "role": "Teacher"}
+    "classYear": 2},{..}
 ]
 ```
 
@@ -268,15 +268,15 @@ Status kód: **404**
 
 ```json
 code: {
-    message: 'Požadované obrázky nebyly nalezeny.',
-    status: 404,
-    success: false
+    "message": "Požadované obrázky nebyly nalezeny.",
+    "message": 404,
+    "success": false
 },
 photos: null
 ```
 #### Načítání velkých obrázků pro určitou kolekci obrázků:
 
-*Metoda:* POST
+*Metoda:* GET
 
 *Cesta:* /retrieveForGroup/:group
 
@@ -291,25 +291,25 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Všechny obrázky byly načteny.',
-    status: 200,
-    success: true
+    "message": "Všechny obrázky byly načteny.",
+    "status": 200,
+    "success": true
 },
 photos: [
-    {_id: "5e60101762af2c828fe78512"
-    filename: "DSC_0379.jpg"
-    base64: "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFR.."
-    orientation: -1
-    createdAt: "2020-03-04T20:32:19.971Z"
-    createdBy: {name: "Foldyna Martin", email: "martin.foldyna@365.pslib.cz", role: "Teacher"}
-    classYear: 3},
-    {_id: "5e60101762af2c828fe78511"
-    filename: "DSC_0100.jpg"
-    base64: "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFR.."
-    orientation: -1
-    createdAt: "2020-03-04T20:32:19.405Z"
-    createdBy: {name: "Foldyna Martin", email: "martin.foldyna@365.pslib.cz", role: "Teacher"}
-    classYear: 2},{..}
+    {"_id": "5e60101762af2c828fe78512"
+    "filename": "DSC_0379.jpg"
+    "base64": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFR.."
+    "orientation": -1
+    "createdAt": "2020-03-04T20:32:19.971Z"
+    "createdBy": {"name": "Foldyna Martin", "email": "martin.foldyna@365.pslib.cz", "role": "Teacher"}
+    "classYear": 3},
+    {"_id": "5e60101762af2c828fe78511"
+    "filename": "DSC_0100.jpg"
+    "base64": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFR.."
+    "orientation": -1
+    "createdAt": "2020-03-04T20:32:19.405Z"
+    "createdBy": {"name": "Foldyna Martin", "email": "martin.foldyna@365.pslib.cz", "role": "Teacher"}
+    "classYear": 2},{..}
 ]
 ```
 
@@ -321,9 +321,9 @@ Status kód: **404**
 
 ```json
 code: {
-    message: 'Požadované obrázky nebyly nalezeny.',
-    status: 404,
-    success: false
+    "message": "Požadované obrázky nebyly nalezeny.",
+    "status": 404,
+    "success": false
 },
 photos: null
 ```
@@ -354,9 +354,9 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Příspěvek byl úspěšně nahrán.',
-    status: 200,
-    success: true
+    "message": 'Příspěvek byl úspěšně nahrán.',
+    "message": 200,
+    "success": true
 },
 post: {
     _id : ObjectId("5e5e219d562f9d2abc2a8791"),
@@ -382,7 +382,7 @@ Status kód: **zaláží na typu erroru**
 
 #### Načítání:
 
-*Metoda:* POST
+*Metoda:* GET
 
 *Cesta:* /load/:subject
 
@@ -397,9 +397,9 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Všechny příspěvky byly načteny.',
-    status: 200,
-    success: true
+    "message": 'Všechny příspěvky byly načteny.',
+    "message": 200,
+    "success": true
 },
 post: [
     _id : ObjectId("5e5e219d562f9d2abc2a8791"),
@@ -433,9 +433,9 @@ Status kód: **404**
 
 ```json
 code: {
-    message: 'Požadované příspěvky nebyly nalezeny.',
-    status: 404,
-    success: false
+    "message": 'Požadované příspěvky nebyly nalezeny.',
+    "message": 404,
+    "success": false
 },
 post: null
 ```
@@ -459,9 +459,9 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Příspěvek byl aktualizován.',
-    status: 200,
-    success: true
+    "message": 'Příspěvek byl aktualizován.',
+    "message": 200,
+    "success": true
 },
 post: [
     _id : ObjectId("5e5e219d562f9d2abc2a8791"),
@@ -495,9 +495,9 @@ Status kód: **404**
 
 ```json
 code: {
-    message: 'Požadovaný příspěvek nebyl nalezen.',
-    status: 404,
-    success: false
+    "message": 'Požadovaný příspěvek nebyl nalezen.',
+    "message": 404,
+    "success": false
 },
 post: null
 ```
@@ -524,9 +524,9 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Uživatelé byli načteni.',
-    status: 200,
-    success: true
+    "message": 'Uživatelé byli načteni.',
+    "message": 200,
+    "success": true
 },
 users: [
    {
@@ -556,9 +556,9 @@ Status kód: **404**
 
 ```json
 code: {
-    message: 'Uživatelé nebyli nalezeni.',
-    status: 404,
-    success: false    
+    "message": 'Uživatelé nebyli nalezeni.',
+    "message": 404,
+    "success": false    
 }
 ```
 
@@ -579,9 +579,9 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Uživatel byl odstraněn.',
-    status: 200,
-    success: true
+    "message": 'Uživatel byl odstraněn.',
+    "message": 200,
+    "success": true
 }
 ```
 
@@ -593,9 +593,9 @@ Status kód: **404**
 
 ```json
 code: {
-    message: 'Uživatelé nebyli nalezeni.',
-    status: 404,
-    success: false    
+    "message": 'Uživatelé nebyli nalezeni.',
+    "message": 404,
+    "success": false    
 }
 ```
 
@@ -625,9 +625,9 @@ Status kód: **200**
 
 ```json
 code: {
-    message: 'Příspěvek byl odstraněn.',
-    status: 200,
-    success: true
+    "message": 'Příspěvek byl odstraněn.',
+    "message": 200,
+    "success": true
 },
 ```
 
@@ -639,9 +639,9 @@ Status kód: **404**
 
 ```json
 code: {
-    message: 'Požadovaný příspěvek nebyl nalezen.',
-    status: 404,
-    success: false   
+    "message": 'Požadovaný příspěvek nebyl nalezen.',
+    "message": 404,
+    "success": false   
 }
 ```
 
