@@ -47,7 +47,7 @@ Status kód: **403**
 - Uživatel nepoužil k přihlášení email @pslib.cz.
 ```json
 code: {
-    "message": 'K přihlášení použijte @pslib.cz, @pslib.cloud, @365.pslib.cz účet.',
+    "message": "K přihlášení použijte @pslib.cz, @pslib.cloud, @365.pslib.cz účet.",
     "status": 403,
     "success": false
 },
@@ -354,24 +354,24 @@ Status kód: **200**
 
 ```json
 code: {
-    "message": 'Příspěvek byl úspěšně nahrán.',
+    "message": "Příspěvek byl úspěšně nahrán.",
     "message": 200,
     "success": true
 },
 post: {
-    _id : ObjectId("5e5e219d562f9d2abc2a8791"),
-    title : "Test videa",
-    createdAt : ISODate("2020-03-03T09:21:33.024Z"),
-    createdBy : {
-        name : "Foldyna Martin",
-        email : "martin.foldyna@365.pslib.cz",
-        role : "Teacher"
+    "_id" : ObjectId("5e5e219d562f9d2abc2a8791"),
+    "title" : "Test videa",
+    "createdAt" : ISODate("2020-03-03T09:21:33.024Z"),
+    "createdBy" : {
+        "name" : "Foldyna Martin",
+        "email" : "martin.foldyna@365.pslib.cz",
+        "role" : "Teacher"
     },
-    thumbnail: "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQa..",
-    subject : "MME",
-    classYear : 3,
-    url : "https://www.youtube.com/",
-    __v : 0,
+    "thumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQa..",
+    "subject" : "MME",
+    "classYear" : 3,
+    "url" : "https://www.youtube.com/",
+    "__v" : 0,
 }
 ```
 **Neúspěšný výstup:**
@@ -397,30 +397,30 @@ Status kód: **200**
 
 ```json
 code: {
-    "message": 'Všechny příspěvky byly načteny.',
+    "message": "Všechny příspěvky byly načteny.",
     "message": 200,
     "success": true
 },
 post: [
-    _id : ObjectId("5e5e219d562f9d2abc2a8791"),
-    title : "Test videa",
-    createdAt : ISODate("2020-03-03T09:21:33.024Z"),
-    createdBy : {
-        name : "Foldyna Martin",
-        email : "martin.foldyna@365.pslib.cz",
-        role : "Teacher"
+    "_id" : ObjectId("5e5e219d562f9d2abc2a8791"),
+    "title" : "Test videa",
+    "createdAt" : ISODate("2020-03-03T09:21:33.024Z"),
+    "createdBy" : {
+        "name" : "Foldyna Martin",
+        "email" : "martin.foldyna@365.pslib.cz",
+        "role" : "Teacher"
     },
-    thumbnail: "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQa..",
-    subject : "MME",
-    classYear : 3,
-    url : "https://www.youtube.com/",
-    __v : 0,
-    updatedAt : ISODate("2020-03-05T09:01:17.170Z"),
-    updatedBy : {
-        name : "Martin Foldyna",
-        picture : "https://lh3.googleusercontent.com/a-/AOh14GjBTwfgT60PBPGKtHqZ8FCRPO-LaK0RQ1K-DtR5=s96-c",
-        email : "martin.foldyna@pslib.cz",
-        role : "Teacher",
+    "thumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQa..",
+    "subject" : "MME",
+    "classYear" : 3,
+    "url" : "https://www.youtube.com/",
+    "__v" : 0,
+    "updatedAt" : ISODate("2020-03-05T09:01:17.170Z"),
+    "updatedBy" : {
+        "name" : "Martin Foldyna",
+        "picture" : "https://lh3.googleusercontent.com/a-/AOh14GjBTwfgT60PBPGKtHqZ8FCRPO-LaK0RQ1K-DtR5=s96-c",
+        "email" : "martin.foldyna@pslib.cz",
+        "role" : "Teacher",
     }
 ]
 ```
@@ -433,7 +433,7 @@ Status kód: **404**
 
 ```json
 code: {
-    "message": 'Požadované příspěvky nebyly nalezeny.',
+    "message": "Požadované příspěvky nebyly nalezeny.",
     "message": 404,
     "success": false
 },
@@ -459,30 +459,30 @@ Status kód: **200**
 
 ```json
 code: {
-    "message": 'Příspěvek byl aktualizován.',
+    "message": "Příspěvek byl aktualizován.",
     "message": 200,
     "success": true
 },
 post: [
-    _id : ObjectId("5e5e219d562f9d2abc2a8791"),
-    title : "Test videa",
-    createdAt : ISODate("2020-03-03T09:21:33.024Z"),
-    createdBy : {
-        name : "Foldyna Martin",
-        email : "martin.foldyna@365.pslib.cz",
-        role : "Teacher"
+    "_id" : ObjectId("5e5e219d562f9d2abc2a8791"),
+    "title" : "Test videa",
+    "createdAt" : ISODate("2020-03-03T09:21:33.024Z"),
+    "createdBy" : {
+        "name" : "Foldyna Martin",
+        "email" : "martin.foldyna@365.pslib.cz",
+        "role" : "Teacher"
     },
-    thumbnail: "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQa..",
-    subject : "MME",
-    classYear : 3,
-    url : "https://www.youtube.com/",
-    __v : 0,
-    updatedAt : ISODate("2020-03-05T09:01:17.170Z"),
-    updatedBy : {
-        name : "Martin Foldyna",
-        picture : "https://lh3.googleusercontent.com/a-/AOh14GjBTwfgT60PBPGKtHqZ8FCRPO-LaK0RQ1K-DtR5=s96-c",
-        email : "martin.foldyna@pslib.cz",
-        role : "Teacher",
+    "thumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQa..",
+    "subject" : "MME",
+    "classYear" : 3,
+    "url" : "https://www.youtube.com/",
+    "__v" : 0,
+    "updatedAt" : ISODate("2020-03-05T09:01:17.170Z"),
+    "updatedBy" : {
+        "name" : "Martin Foldyna",
+        "picture" : "https://lh3.googleusercontent.com/a-/AOh14GjBTwfgT60PBPGKtHqZ8FCRPO-LaK0RQ1K-DtR5=s96-c",
+        "email" : "martin.foldyna@pslib.cz",
+        "role" : "Teacher",
     }
 ]
 ```
@@ -495,7 +495,7 @@ Status kód: **404**
 
 ```json
 code: {
-    "message": 'Požadovaný příspěvek nebyl nalezen.',
+    "message": "Požadovaný příspěvek nebyl nalezen.",
     "message": 404,
     "success": false
 },
@@ -524,26 +524,26 @@ Status kód: **200**
 
 ```json
 code: {
-    "message": 'Uživatelé byli načteni.',
+    "message": "Uživatelé byli načteni.",
     "message": 200,
     "success": true
 },
 users: [
    {
-       _id: "5e59452146f3a471b1584d37"
-       email: "martin.foldyna@365.pslib.cz"
-       name: "Foldyna Martin"
-       state: "authorised"
-       role: ["teacher", "admin"]
-       __v: 0
+       "_id": "5e59452146f3a471b1584d37"
+       "email": "martin.foldyna@365.pslib.cz"
+       "name": "Foldyna Martin"
+       "state": "authorised"
+       "role": ["teacher", "admin"]
+       "__v": 0
    },
    {
-       _id: "5e5c0e960ed450b187618508"
-       email: "martin.foldyna@pslib.cz"
-       name: "Martin Foldyna"
-       state: "unauthorised"
-       role: "Teacher"
-       __v: 0
+       "_id": "5e5c0e960ed450b187618508"
+       "email": "martin.foldyna@pslib.cz"
+       "name": "Martin Foldyna"
+       "state": "unauthorised"
+       "role": "Teacher"
+       "__v": 0
    }
 ]
 ```
@@ -556,7 +556,7 @@ Status kód: **404**
 
 ```json
 code: {
-    "message": 'Uživatelé nebyli nalezeni.',
+    "message": "Uživatelé nebyli nalezeni.",
     "message": 404,
     "success": false    
 }
@@ -579,7 +579,7 @@ Status kód: **200**
 
 ```json
 code: {
-    "message": 'Uživatel byl odstraněn.',
+    "message": "Uživatel byl odstraněn.",
     "message": 200,
     "success": true
 }
@@ -593,7 +593,7 @@ Status kód: **404**
 
 ```json
 code: {
-    "message": 'Uživatelé nebyli nalezeni.',
+    "message": "Uživatelé nebyli nalezeni.",
     "message": 404,
     "success": false    
 }
@@ -625,7 +625,7 @@ Status kód: **200**
 
 ```json
 code: {
-    "message": 'Příspěvek byl odstraněn.',
+    "message": "Příspěvek byl odstraněn.",
     "message": 200,
     "success": true
 },
@@ -639,7 +639,7 @@ Status kód: **404**
 
 ```json
 code: {
-    "message": 'Požadovaný příspěvek nebyl nalezen.',
+    "message": "Požadovaný příspěvek nebyl nalezen.",
     "message": 404,
     "success": false   
 }
