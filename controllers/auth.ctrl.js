@@ -2,14 +2,13 @@ const jwt = require('jsonwebtoken');
 const verifier = require('google-id-token-verifier');
 const AuthorisedUser = require('./../models/authorisedUser.model');
 const messages = require('./../config/messages.helper');
-const secrets = require('./../config/secrets.config.json');
 
 require('dotenv').config();
 
 module.exports.googleLogin = function(req, res, next) {
     let idToken = req.body.idToken;
 
-    let clientID = secrets.googleSecret;
+    let clientID = process.env.TOKEN_STRATEGY_GOOGLE;
 
     verifier.verify(idToken, clientID, function (err, tokenInfo) {
         if (!err) {
@@ -81,15 +80,18 @@ module.exports.googleLogin = function(req, res, next) {
             }
 
         } else {
-            res.send('OOpss');
+            return next(err);
         }
     });
 };
 
 module.exports.microsoftLogin = (req, res, next) => {
     let accessToken = req.body.token;
-    let key = secrets.microsoftSecret
+    let key = process.env.TOKEN_STRATEGY_MICROSOFT;
     jwt.verify(accessToken, key, {}, (err, tokenInfo) => {
+        if(err) {
+            return next(err);
+        }
         let email = tokenInfo.preferred_username.toLowerCase();
         let splittedName = email.split('@');
         if(splittedName[1]==="365.pslib.cz" || splittedName[1]==="pslib.cloud") {

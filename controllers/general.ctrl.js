@@ -2,7 +2,6 @@ const helpers = require('./helpers');
 const messages = require('./../config/messages.helper')
 
 module.exports.delete = (req, res, next) => {
-    console.log(req.params);
     let paramModel = req.params.model;
     let paramId = req.params.id;
 

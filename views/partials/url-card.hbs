@@ -1,16 +1,7 @@
-<style>
-    .rounder-corners {
-        border-radius: 20px !important;
-        overflow: hidden;
-    }
-    .thumbnail-image {
-        width: 100%;
-        object-fit: cover;
-    }
-</style>
+
 <div class="card-wrapper">
     <a href="{{url}}" style="color: inherit; text-decoration: none;" target="_blank" >
-        <div class="uk-card uk-card-default uk-card-hover rounder-corners">
+        <div class="uk-card uk-card-default uk-card-hover rounded-corners">
             <div class="uk-card-media-top">
 
                 <div class="uk-overflow-hidden">
@@ -20,7 +11,12 @@
             </div>
             <div class="uk-card-body">
                 <h2 class="uk-card-title">{{title}}</h2>
-                <code class="uk-text-primary">#video</code>
+                {{# if (eq subject "MME")}}
+                    <code class="uk-text-primary">#video</code>
+                    {{else}}
+                    <code class="uk-text-primary">#webová stránka</code>
+                {{/if}}
+                <code class="uk-text-primary">#{{classYear}}. ročník</code>
             </div>
         </div>
     </a>

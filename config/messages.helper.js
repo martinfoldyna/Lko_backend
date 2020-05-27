@@ -98,6 +98,11 @@ module.exports = {
             status: 200,
             success: true
         },
+        UPDATED: {
+            message: 'Uživatel byl aktualizován.',
+            status: 200,
+            success: true
+        },
         MUTLIPLE_NOT_FOUND: {
             message: 'Uživatelé nebyli nalezeni.',
             status: 404,
@@ -108,7 +113,12 @@ module.exports = {
             status: 404,
             success: false
         },
-        LOADED: {
+        ONE_LOADED: {
+            message: 'Uživatel byl načten.',
+            status: 200,
+            success: true
+        },
+        MULTI_LOADED: {
             message: 'Uživatelé byli načteni.',
             status: 200,
             success: true

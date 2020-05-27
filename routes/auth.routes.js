@@ -15,11 +15,5 @@ router.post('/logout', (req, res, next) => {
     })
 })
 
-router.get('/', (req, res, next) => {
-    console.log(req.user)
-    res.json({
-        justPlainUser: req.user
-    })
-})
 
 module.exports = router;

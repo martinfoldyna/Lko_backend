@@ -41,8 +41,6 @@ module.exports = {
             }
         }
 
-        console.log(buffer);
-
         return buffer;
     },
     groupImages: function (val, options) {

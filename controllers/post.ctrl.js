@@ -35,7 +35,6 @@ module.exports.add = (req, res, next) => {
 
     newArticle.save((err, doc) => {
         if(err) {
-            console.log(err);
             throw err;
         }
 
@@ -83,7 +82,6 @@ module.exports.update = (req, res, next) => {
             data.updatedBy = appUser;
         }
         data.updatedAt = Date.now();
-        console.log(Date.now());
         data.save().then((data) => {
 
             res.status(messages.POST.UPDATED.status).json({

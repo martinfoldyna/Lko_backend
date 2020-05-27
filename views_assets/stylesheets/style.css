@@ -17,10 +17,179 @@ a {
   width: 100%;
 }
 
+/**********
+  HEADER
+*********/
+
 #main-wrapper {
   max-width: 1220px;
   display: block;
   margin: 0 auto;
 }
+
+
+#main-header {
+  width: 80%;
+  display: block;
+  margin: 0 auto;
+  padding-bottom: .8em;
+}
+
+.main-heading {
+  padding-top: 2em;
+  font-weight: 700;
+}
+
+#pslib-logo {
+  width: 50%;
+  align-self: center;
+  margin: 3em;
+
+}
+
+#pslib-logo img {
+  transition: opacity .5s;
+}
+
+#pslib-logo:hover img {
+  opacity: .8;
+}
+
+p.info-text {
+  font-size: .95em;
+  text-align: justify;
+}
+
+@media (max-width: 780px) {
+  #pslib-logo {
+    display: none;
+  }
+
+  .header-content-wrapper {
+    display: block;
+  }
+}
+
+/**********
+  IMAGE SITE
+*********/
+ .rounded-corners {
+   border-radius: 20px !important;
+   overflow: hidden;
+ }
+.thumbnail-image {
+  width: 100%;
+  object-fit: cover;
+}
+
+
+.row.no-gutter [class*='col-'] {
+  padding-right:0;
+  padding-left:0;
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+}
+
+.row.no-gutter .img-responsive {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1, 1.1);
+  transition: all .5s;
+
+}
+
+.row.no-gutter .img-responsive:hover {
+  transform: scale(1, 1);
+}
+
+.overlay-container ion-icon {
+  font-size: 2em;
+}
+
+.row.no-gutter [class*='col-']:hover .overlay {
+
+  opacity: 1;
+}
+
+#photos {
+  /* Prevent vertical gaps */
+  line-height: 0;
+
+  -webkit-column-count: 3;
+  -webkit-column-gap:   0px;
+  -moz-column-count:    3;
+  -moz-column-gap:      0px;
+  column-count:         3;
+  column-gap:           0px;
+}
+
+#photos div,
+#photos div a img,
+#photos div a {
+  /* Just in case there are inline attributes */
+  width: 100% !important;
+  height: auto !important;
+}
+
+#photos div {
+  overflow: hidden;
+}
+
+#photos div a img {
+  transform: scale(1.02, 1.02);
+  transition: all .5s;
+}
+
+#photos div:hover a img {
+  transform: scale(1, 1);
+}
+
+.home span {
+  transition: all .5s;
+}
+
+.home:hover span{
+  opacity: .8;
+}
+
+/**********
+  HOME SITE
+*********/
+
+#main-wrapper p {
+  font-size: 1.1rem;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.link-button {
+  margin: 0 auto;
+  margin-top: 1.2em;
+  transition: all .5s;
+}
+
+.link-button:hover {
+  transform: scale(1.01, 1.01);
+  box-shadow: 0 14px 25px rgba(0,0,0,.16);
+}
+
+ #main-wrapper {
+   max-width: 1220px;
+   display: block;
+   margin: 0 auto;
+ }
+#main-wrapper,
+#main-wrapper h1,
+#main-wrapper h2,
+#main-wrapper h3,
+#main-wrapper a{
+  font-family: 'Poppins', sans-serif;
+}
+
 
 

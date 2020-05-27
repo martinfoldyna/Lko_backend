@@ -1,11 +1,20 @@
-<a href="/public/" class="home"><span class="uk-margin-small-right back-icon uk-text-primary uk-text-background" uk-icon="icon: home; ratio: 2"></span></a>
+<a href="/" class="home"><span class="uk-margin-small-right back-icon uk-text-primary uk-text-background" uk-icon="icon: home; ratio: 2"></span></a>
 <h2>Webové stránky</h2>
 <div class="row">
-    <div class="uk-child-width-1-2@s uk-child-width-1-4@m" uk-grid >
-        {{#each websites}}
+    <div uk-filter="target: .js-filter">
+        <ul class="uk-subnav uk-subnav-pill">
+            <li class="uk-active" uk-filter-control><a href="#">Všechny</a></li>
+            {{#each classYears}}
+                <li uk-filter-control=".tag-{{this}}year"><a href="#">{{this}}. ročník</a></li>
+            {{/each}}
+        </ul>
+        <div class="uk-child-width-1-2@s uk-child-width-1-4@m js-filter" uk-grid >
+            {{#each websites}}
+                <div class="tag-{{classYear}}year">
+                    {{>url-card input=this}}
+                </div>
 
-            {{>url-card input=this}}
-
-        {{/each}}
+            {{/each}}
+        </div>
     </div>
 </div>

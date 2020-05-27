@@ -4,8 +4,8 @@ const messages = require('./../config/messages.helper')
 module.exports.getAll = (req, res, next) => {
     User.find().then((users) => {
         if(users) {
-            res.status(messages.USER.LOADED.status).json({
-                code: messages.USER.LOADED,
+            res.status(messages.USER.MULTI_LOADED.status).json({
+                code: messages.USER.MULTI_LOADED,
                 users: users
             })
         } else {
@@ -15,6 +15,51 @@ module.exports.getAll = (req, res, next) => {
         }
     }).catch(err => {
         return next(err);
+    })
+}
+
+module.exports.load = (req, res, next) => {
+    User.findOne({email: req.params.email}).then(user => {
+        if(!user) res.status(messages.USER.ONE_NOT_FOUND.status).json({
+            code: messages.USER.ONE_NOT_FOUND
+        })
+
+        res.status(messages.USER.ONE_LOADED.status).json({
+            code: messages.USER.ONE_LOADED,
+            user: user
+        })
+    })
+}
+
+module.exports.update = (req, res, next) => {
+    let userId = req.params.id;
+    let updatedUser = req.body;
+
+    User.findById(userId).then(user => {
+        if(!user) {
+            res.status(messages.USER.ONE_NOT_FOUND.status).json({
+                code: messages.USER.ONE_NOT_FOUND,
+                user: null
+            })
+        }
+        let appUser = req.app.get('user');
+        if(appUser && appUser.role === "admin") {
+            user.role = updatedUser.role;
+            user.save().then((data) => {
+
+                res.status(messages.USER.UPDATED.status).json({
+                    code: messages.USER.UPDATED,
+                    user: data
+                })
+            }, err => {
+                return next(err);
+            })
+        } else {
+            res.status(messages.USER.NOT_AUTHORISED.status).json({
+                code: messages.USER.NOT_AUTHORISED,
+                user: null
+            })
+        }
     })
 }
 

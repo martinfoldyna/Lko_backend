@@ -6,7 +6,7 @@ const articlesRoutes = require('./post.routes');
 const generalRoutes = require('./general.routes');
 
 module.exports = (app) => {
-    app.use('/public', indexRoutes);
+    app.use('/', indexRoutes);
     app.use('/api/auth', authRoutes);
     app.use('/api/photo', photoRoutes);
     app.use('/api/user', userRoutes);

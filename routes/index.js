@@ -18,32 +18,44 @@ router.get('/', function(req, res, next) {
     subject: '',
   }
 
+  function sortByDate(a, b) {
+    return (a.createdAt > b.createdAt) ? -1 : ((b.createdAt > a.createdAt) ? 1 : 0)
+  }
+
   Post.find().then(data => {
     if (!data) throw new Error('Data not found');
+      data = data.sort(sortByDate)
 
       let allPosts = data;
 
+
     allWebsites = data.filter((article, index) => {
-      if(article.subject === "WEB" && index < 3) {
+      if(article.subject === "WEB") {
         return true;
       } else {
         return false;
       }
+    }).filter((article,index) => {
+      return index < 3;
     }).map(website => {
       return {
         _id: website._id,
         title: website.title,
         thumbnail: website.thumbnail,
         url: website.url,
-        subject: website.subject
+        subject: website.subject,
+        classYear: website.classYear+1
       }
     });
 
 
     Photo.find().then(images => {
+      images = images.sort(sortByDate)
 
       allnonThumnailsImages = images.filter(function (img, index) {
-        return img.subject ==="MME" && index > 3 && img.thumbnail && !img.group;
+        return img.subject ==="MME" && img.thumbnail && !img.group;
+      }).filter((image,index) => {
+        return index < 3;
       }).map(file => {
 
         if (file.data !== undefined && !file.doc_id) {
@@ -61,28 +73,23 @@ router.get('/', function(req, res, next) {
         }
       })
 
-      allMMEImages = images.filter((image, index) => {
-        if(image.subject === "MME" && !image.doc_id && index < 3) {
-          return true;
-        } else {
-          return false;
-        }
-      })
-
 
         let allVideos = allPosts.filter((video, index) => {
-          if(index < 3 && video.subject === "MME") {
+          if(video.subject === "MME") {
             return true;
           } else {
             return false;
           }
+        }).filter((image,index) => {
+          return index < 3;
         }).map(video => {
               return {
                 _id: video._id,
                 title: video.title,
                 thumbnail: video.thumbnail,
                 url: video.url,
-                subject: video.subject
+                subject: video.subject,
+                classYear: video.classYear+1
               }
         })
       Photo.find({subject: 'STR'}).then(drawings => {
@@ -99,8 +106,12 @@ router.get('/', function(req, res, next) {
             }
           });
           allDrawings[thisGroup] = galleryImages;
+          allDrawings.sort(sortByDate).filter((article,index) => {
+            return index < 3;
+          });
+
         }
-        res.render('index', {websites: allWebsites, images: allnonThumnailsImages, videos: allVideos, mmeImages: allMMEImages, drawings: allDrawings})
+        res.render('index', {websites: allWebsites, images: allnonThumnailsImages, videos: allVideos, drawings: allDrawings})
 
 
       })
@@ -136,9 +147,11 @@ router.get('/images', (req, res) => {
         }
       })
 
-        let allClassYears = [...new Set(allFiles.map(item => item.classYear))];
+        let allClassYears = [...new Set(allFiles.map(item => item.classYear))].sort();
 
         Post.find({subject: "MME"}).then(data => {
+
+
 
           let allVideos = data.map(video => {
             return {
@@ -146,12 +159,14 @@ router.get('/images', (req, res) => {
               title: video.title,
               thumbnail: video.thumbnail,
               url: video.url,
-              subject: video.subject
+              subject: video.subject,
+              classYear: video.classYear+1
             }
           });
 
-          // console.log(allFiles);
-          res.render('images', {images: allFiles, classYears: allClassYears, videos: allVideos});
+          let allVideoClassYears = [...new Set(allVideos.map(item => item.classYear))].sort();
+
+          res.render('images', {images: allFiles, imageClassYears: allClassYears, videos: allVideos, videoClassYears: allVideoClassYears});
         })
 
 
@@ -163,17 +178,22 @@ router.get('/images', (req, res) => {
 router.get('/websites', (req, res, next) => {
   let allWebsites = [];
   Post.find({subject: 'WEB'}).then(websites => {
+
+
     allWebsites = websites.map(website => {
       return {
         _id: website._id,
         title: website.title,
         thumbnail: website.thumbnail,
         url: website.url,
-        subject: website.subject
+        subject: website.subject,
+        classYear: website.classYear+1
       }
     });
 
-    res.render('websites', {websites: allWebsites});
+    let allClassYears = [...new Set(allWebsites.map(item => item.classYear))].sort();
+
+    res.render('websites', {websites: allWebsites, classYears: allClassYears});
   })
 })
 

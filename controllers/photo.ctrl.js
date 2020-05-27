@@ -39,7 +39,6 @@ module.exports.uploadPhotos = (req, res, next) => {
                 orientation: file.orientation,
                 subject: subject,
             });
-            console.log(req.app.get('user'));
             if(req.app.get('user')) {
                 newFile.createdBy = req.app.get('user');
                 newFile.createdAt = Date.now();
