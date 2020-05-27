@@ -231,7 +231,7 @@ module.exports.delete = (req, res, next) => {
 
         res.status(messages.USER.DELETED.status).send({
             code: messages.USER.DELETED,
-            result: result
+            result: results
         })
     })
 
