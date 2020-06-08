@@ -131,6 +131,9 @@ router.get('/images', (req, res) => {
           return false;
         }).map(file => {
 
+          if(!file.name.includes('.jpg')) {
+            file.name = file.name.replace(/_/g, ' ');
+          }
 
         if (file.data !== undefined && !file.doc_id) {
           let image = {
@@ -139,7 +142,8 @@ router.get('/images', (req, res) => {
             name: file.name,
             data: file.data,
             subject: file.subject,
-            classYear: file.classYear+1
+            classYear: file.classYear+1,
+            tag: 'foto'
           }
           return image
         } else {
@@ -160,7 +164,8 @@ router.get('/images', (req, res) => {
               thumbnail: video.thumbnail,
               url: video.url,
               subject: video.subject,
-              classYear: video.classYear+1
+              classYear: video.classYear+1,
+              tag: 'video'
             }
           });
 

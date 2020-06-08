@@ -50,18 +50,20 @@
                             <div class="uk-card uk-card-default uk-card-hover rounded-corners">
                                 <div class="uk-card-media-top">
                                     <div class="uk-overflow-hidden">
-                                        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
+                                        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="autoplay: true">
 
                                             <ul class="uk-slideshow-items" style="min-height: 100%!important;width:100%;">
                                                 {{#each value}}
                                                     <li>
-                                                        <img data-src="{{this}}" style="width: 100%; object-fit: contain" alt="" uk-cover uk-img="target: !.uk-slideshow-items">
+                                                        <a data-fancybox data-caption="{{caption}}" href="{{this}}">
+                                                            <img data-src="{{this}}" alt="" style="width: 100%; object-fit: contain" class="thumbnail-image" uk-cover uk-img="target: !.uk-slideshow-items">
+                                                        </a>
                                                     </li>
                                                 {{/each}}
                                             </ul>
 
-                                            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
-                                            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+                                            <a class="uk-position-center-left uk-position-small gallery-arrows" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+                                            <a class="uk-position-center-right uk-position-small gallery-arrows" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
 
                                         </div>
                                     </div>

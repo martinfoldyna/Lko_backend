@@ -62,6 +62,11 @@ module.exports = {
             status: 200,
             success: true
         },
+        UPDATED: {
+            message: 'Obrázek byl úspěšně upraven.',
+            status: 200,
+            success: true
+        }
     },
     POST: {
         NOT_FOUND: {

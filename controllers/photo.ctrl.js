@@ -67,7 +67,31 @@ module.exports.uploadPhotos = (req, res, next) => {
         })
 
         res.end();
-    }
+}
+
+/**
+ * Úprava obrázků
+ * @param req: obrázek
+ */
+module.exports.edit = (req, res, next) => {
+    let imageID = req.params.id;
+    let image = req.body
+
+    Photo.findById(imageID).then(foundImage => {
+        foundImage.name = image.filename;
+        foundImage.description = image.description;
+        foundImage.save().then(saveData => {
+            res.status(messages.PHOTO.UPDATED.status).json({
+                code: messages.PHOTO.UPDATED,
+                image: saveData
+            })
+        }).catch(err => {
+            return next(err);
+        })
+    }).catch(err => {
+        return next(err);
+    })
+}
 
 /**
  * Načítání obrázků

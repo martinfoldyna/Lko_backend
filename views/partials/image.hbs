@@ -4,7 +4,9 @@
     <div class="uk-card uk-card-default uk-card-hover rounded-corners">
         <div class="uk-card-media-top">
             <div class="uk-overflow-hidden">
-                <img src="data:image/jpg;base64,{{data}}" alt="" class="uk-animation-kenburns thumbnail-image" >
+                <a data-fancybox data-caption="{{name}}" href="data:image/jpg;base64,{{data}}">
+                    <img src="data:image/jpg;base64,{{data}}" alt="" class="thumbnail-image">
+                </a>
             </div>
         </div>
         <div class="uk-card-body">

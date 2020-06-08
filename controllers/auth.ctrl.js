@@ -2,6 +2,9 @@ const jwt = require('jsonwebtoken');
 const verifier = require('google-id-token-verifier');
 const AuthorisedUser = require('./../models/authorisedUser.model');
 const messages = require('./../config/messages.helper');
+const azureJWT = require('azure-jwt-verify');
+const jwtDecoder = require('jwt-decode')
+
 
 require('dotenv').config();
 
@@ -87,11 +90,14 @@ module.exports.googleLogin = function(req, res, next) {
 
 module.exports.microsoftLogin = (req, res, next) => {
     let accessToken = req.body.token;
-    let key = process.env.TOKEN_STRATEGY_MICROSOFT;
-    jwt.verify(accessToken, key, {}, (err, tokenInfo) => {
-        if(err) {
-            return next(err);
-        }
+    let microsoftAud = process.env.TOKEN_STRATEGY_MICROSOFT_AUD;
+    let microsoftIss = process.env.TOKEN_STRATEGY_MICROSOFT_ISS;
+    let microsoftUri = process.env.TOKEN_STRATEGY_MICROSOFT_URI;
+    let decodedToken = jwtDecoder(accessToken);
+    console.log(decodedToken);
+
+    azureJWT.verify(accessToken, {JWK_URI: microsoftUri, ISS: microsoftIss,AUD: microsoftAud}).then(tokenResponse => {
+        let tokenInfo = JSON.parse(tokenResponse).message;
         let email = tokenInfo.preferred_username.toLowerCase();
         let splittedName = email.split('@');
         if(splittedName[1]==="365.pslib.cz" || splittedName[1]==="pslib.cloud") {
@@ -164,6 +170,8 @@ module.exports.microsoftLogin = (req, res, next) => {
             })
         }
 
+    }).catch(err => {
+        return next(err);
     });
 
 

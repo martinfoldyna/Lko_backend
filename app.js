@@ -12,7 +12,7 @@ const busboyBodyParser = require('busboy-body-parser');
 const handlebarsHelpers = require('handlebars-helpers');
 const customHelpers = require('./config/customHelpers');
 const exphbs = require('express-handlebars');
-const jwt = require('jsonwebtoken');
+const azureJWT = require('azure-jwt-verify');
 const verifier = require('google-id-token-verifier');
 
 const moment = require('moment');
@@ -81,14 +81,15 @@ app.use(async (req, res, next) => {
 
           });
         } else if(provider === "microsoft") {
-          let secret = process.env.TOKEN_STRATEGY_MICROSOFT
-          await jwt.verify(token, secret, {}, (err, tokenInfo) => {
-            if(tokenInfo){
+          let microsoftUri = process.env.TOKEN_STRATEGY_MICROSOFT_URI
+          let microsoftIss = process.env.TOKEN_STRATEGY_MICROSOFT_ISS
+          let microsoftAud = process.env.TOKEN_STRATEGY_MICROSOFT_AUD
+          azureJWT.verify(token, {JWK_URI: microsoftUri, ISS: microsoftIss,AUD: microsoftAud}).then(tokenResponse => {
+            if(tokenResponse){
               return req.next();
             }
-            if (err) {
-              return res.status(500).send(err);
-            }
+          }).catch(err => {
+            return res.status(500).send(err);
           });
         } else {
           req.next();

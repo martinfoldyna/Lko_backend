@@ -4,6 +4,11 @@ body {
   padding: 0;
 }
 
+html, body {
+  position: relative;
+  height: 100%;
+}
+
 a {
   color: #00B7FF;
 }
@@ -15,6 +20,19 @@ a {
 .tile {
   box-shadow: 0px 15px 40px rgba(166, 173, 201, 0.2), 0px 5px 10px rgba(154, 160, 185, 0.05);
   width: 100%;
+}
+
+#content-wrapper {
+  min-height: 100vh; /* will cover the 100% of viewport */
+  overflow: hidden;
+  display: block;
+  position: relative;
+  padding-bottom: 230px;
+  box-sizing: border-box;
+}
+
+.uk-card {
+  transition-duration: .4s;
 }
 
 /**********
@@ -29,9 +47,9 @@ a {
 
 
 #main-header {
-  width: 80%;
+  /*width: 80%;*/
   display: block;
-  margin: 0 auto;
+  /*margin: 0 auto;*/
   padding-bottom: .8em;
 }
 
@@ -60,21 +78,13 @@ p.info-text {
   text-align: justify;
 }
 
-@media (max-width: 780px) {
-  #pslib-logo {
-    display: none;
-  }
 
-  .header-content-wrapper {
-    display: block;
-  }
-}
 
 /**********
   IMAGE SITE
 *********/
  .rounded-corners {
-   border-radius: 20px !important;
+   border-radius: .25rem !important;
    overflow: hidden;
  }
 .thumbnail-image {
@@ -146,12 +156,20 @@ p.info-text {
   transform: scale(1, 1);
 }
 
+.gallery-tile > a {
+  color: inherit; text-decoration: none;
+}
+
 .home span {
   transition: all .5s;
 }
 
 .home:hover span{
   opacity: .8;
+}
+
+.uk-subnav.uk-subnav-pill li a {
+  border-radius: .25rem !important;
 }
 
 /**********
@@ -178,6 +196,10 @@ p.info-text {
   box-shadow: 0 14px 25px rgba(0,0,0,.16);
 }
 
+.small-site-nav a {
+  color: #1f87f0;
+}
+
  #main-wrapper {
    max-width: 1220px;
    display: block;
@@ -189,6 +211,98 @@ p.info-text {
 #main-wrapper h3,
 #main-wrapper a{
   font-family: 'Poppins', sans-serif;
+}
+
+.gallery-arrows svg {
+  filter: drop-shadow( 0 0 5px rgb(0, 0, 0));
+}
+
+footer {
+  height: 200px;
+  background-color: #e5e5e5;
+  margin-top: 2em;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+footer .pslib-logo {
+  max-height: 50%;
+  /*margin: 0 auto;*/
+}
+
+footer .container {
+  height: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+footer .footer-menu li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+footer .footer-menu li a {
+  color: #1f87f0;
+  transition: text-shadow .5s;
+}
+
+footer .footer-menu li a:hover {
+  text-decoration: none;
+  text-shadow: 1px 0 #1f87f0;
+}
+
+footer #copy {
+  margin: 0;
+}
+
+
+/*******
+  MEDIA QURIES
+*******/
+@media screen and (max-width: 1220px){
+  #main-wrapper,
+  footer .container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 780px) {
+  #pslib-logo {
+    display: none;
+  }
+
+  .header-content-wrapper {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 640px){
+  .thumbnail-image {
+    max-height: 30vh;
+  }
+
+  footer .container {
+    display: block;
+    text-align: center;
+  }
+
+  footer .pslib-logo {
+    margin-top: .5rem;
+  }
+
+  footer ul {
+    margin-top: .5rem;
+  }
+
+  .uk-slideshow-items img {
+    object-fit: cover !important;
+  }
+
+  .link-button {
+    width: 100%;
+  }
 }
 
 
