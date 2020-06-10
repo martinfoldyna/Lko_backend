@@ -81,9 +81,9 @@ app.use(async (req, res, next) => {
 
           });
         } else if(provider === "microsoft") {
-          let microsoftUri = process.env.TOKEN_STRATEGY_MICROSOFT_URI
-          let microsoftIss = process.env.TOKEN_STRATEGY_MICROSOFT_ISS
-          let microsoftAud = process.env.TOKEN_STRATEGY_MICROSOFT_AUD
+          let microsoftIss = process.env.TOKEN_STRATEGY_MICROSOFT_ISS;
+          let microsoftUri = process.env.TOKEN_STRATEGY_MICROSOFT_URI;
+          let microsoftAud = process.env.TOKEN_STRATEGY_MICROSOFT_AUD;
           azureJWT.verify(token, {JWK_URI: microsoftUri, ISS: microsoftIss,AUD: microsoftAud}).then(tokenResponse => {
             if(tokenResponse){
               return req.next();
