@@ -22,7 +22,7 @@ require('dotenv').config();
 const app = express();
 
 
-mongoose.connect("mongodb://martin:Martin1306@ds021922.mlab.com:21922/heroku_5mt71gtb",{useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(`${process.env.DB_URL}/${process.env.DB_NAME}`,{useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log('✅ Successfully connected to MongoDB ' + process.env.DB_NAME))
     .catch(err => {
       console.log('🆘 Error occured: ' + err.message);
