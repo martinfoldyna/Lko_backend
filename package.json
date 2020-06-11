@@ -31,7 +31,7 @@
     "handlebars-helpers": "^0.10.0",
     "handlebars.moment": "^1.0.4",
     "http-errors": "~1.6.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
