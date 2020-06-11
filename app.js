@@ -52,8 +52,8 @@ app.use(cookieParser('jjlkkk'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(session({ secret: 'anything', resave: true,
-  saveUninitialized: true}));
+// app.use(session({ secret: 'anything', resave: true,
+//   saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport.settings')(passport);
