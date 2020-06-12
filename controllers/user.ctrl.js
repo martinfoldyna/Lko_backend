@@ -1,5 +1,6 @@
 const User = require('./../models/authorisedUser.model');
-const messages = require('./../config/messages.helper')
+const messages = require('./../config/messages.helper');
+const userHelper = require('./../helpers/userFind.helper');
 
 module.exports.getAll = (req, res, next) => {
     User.find().then((users) => {
@@ -42,24 +43,27 @@ module.exports.update = (req, res, next) => {
                 user: null
             })
         }
-        let appUser = req.app.get('user');
-        if(appUser && appUser.role === "admin") {
+        userHelper.getUserInfoByToken(req.headers.authorization).then(appUser => {
             user.role = updatedUser.role;
-            user.save().then((data) => {
+            if(appUser.role === "admin") {
+                user.save().then((data) => {
 
-                res.status(messages.USER.UPDATED.status).json({
-                    code: messages.USER.UPDATED,
-                    user: data
+                    res.status(messages.USER.UPDATED.status).json({
+                        code: messages.USER.UPDATED,
+                        user: data
+                    })
+                }, err => {
+                    return next(err);
                 })
-            }, err => {
-                return next(err);
-            })
-        } else {
-            res.status(messages.USER.NOT_AUTHORISED.status).json({
-                code: messages.USER.NOT_AUTHORISED,
-                user: null
-            })
-        }
+            } else {
+                res.status(messages.USER.NOT_AUTHORISED.status).json({
+                    code: messages.USER.NOT_AUTHORISED,
+                    user: null
+                })
+            }
+        }).catch(err => {
+            return next(err);
+        })
     })
 }
 

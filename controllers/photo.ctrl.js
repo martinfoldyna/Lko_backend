@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Photo = require('../models/photo.model');
-const messages = require('./../config/messages.helper')
+const messages = require('./../config/messages.helper');
+const userHelper = require('./../helpers/userFind.helper');
 
 
 let Grid = require('gridfs-stream');
@@ -13,7 +14,7 @@ let gfs;
  * Nahrávánní obrázků
  * @param req: jednotlivé obrázky
  */
-module.exports.uploadPhotos = (req, res, next) => {
+module.exports.uploadPhotos = async (req, res, next) => {
 
         let fileKeys = Object.keys(req.files);
         let files = [];
@@ -24,7 +25,7 @@ module.exports.uploadPhotos = (req, res, next) => {
             files.push(req.files[key]);
         });
 
-        files.forEach(file => {
+        for (const file of files) {
             let slicedName = file.name.split(';orientation=');
             file.name = slicedName[0];
             file.orientation = parseInt(slicedName[1]);
@@ -39,10 +40,12 @@ module.exports.uploadPhotos = (req, res, next) => {
                 orientation: file.orientation,
                 subject: subject,
             });
-            if(req.app.get('user')) {
-                newFile.createdBy = req.app.get('user');
+
+            await userHelper.findUserByToken(req.headers.authorization).then(user => {
+                newFile.createdBy = user;
                 newFile.createdAt = Date.now();
-            }
+
+            })
 
             if(newFile.name.includes('th_')) {
                 newFile.thumbnail = true;
@@ -60,9 +63,9 @@ module.exports.uploadPhotos = (req, res, next) => {
             newFile.save((err) => {
                 if(err) next(err);
             });
-        })
+        }
 
-        res.status(messages.PHOTO.ALL_UPLOADED.status).json({
+    res.status(messages.PHOTO.ALL_UPLOADED.status).json({
             code: messages.PHOTO.ALL_UPLOADED,
         })
 

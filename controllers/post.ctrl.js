@@ -1,40 +1,41 @@
 const Post = require('../models/post.model');
-const messages = require('./../config/messages.helper')
+const messages = require('./../config/messages.helper');
+const userHelper = require('./../helpers/userFind.helper');
 
-module.exports.add = (req, res, next) => {
-    if(!req.body) {
+module.exports.add = async (req, res, next) => {
+    if (!req.body) {
         return next()
     }
 
     const requestBody = req.body;
     const thumbnail = req.files.thumbnail;
     let subject = req.params.subject;
-    let user;
-    if(req.app.get('user')) {
-        user = req.app.get('user')
-    } else {
-        user = {name: "Unknown"}
-    }
+
 
     let newArticle = new Post({
         title: requestBody.title,
         createdAt: Date.now(),
-        createdBy: user,
         thumbnail: thumbnail.data.toString('base64'),
         subject: req.params.subject,
         classYear: requestBody.classYear,
     })
 
-    if(requestBody.url) {
+    await userHelper.getUserInfoByToken(req.headers.authorization).then(tokenUser => {
+        newArticle.createdBy = tokenUser
+    }).catch(err => {
+        throw new Error(err);
+    });
+
+    if (requestBody.url) {
         newArticle.url = requestBody.url;
     }
 
-    if(requestBody.body) {
+    if (requestBody.body) {
         newArticle.body = requestBody.body;
     }
 
     newArticle.save((err, doc) => {
-        if(err) {
+        if (err) {
             throw err;
         }
 
@@ -68,6 +69,7 @@ module.exports.load = (req, res, next) => {
 module.exports.update = (req, res, next) => {
     let articleId = req.params.id;
     let requestBody = req.body;
+    let userLoaded = false;
     Post.findById(articleId).then(data => {
         if(!data) {
             res.status(messages.POST.NOT_FOUND.status).json({
@@ -75,22 +77,26 @@ module.exports.update = (req, res, next) => {
                 post: null
             })
         }
-        let appUser = req.app.get('user');
+
         data.title = requestBody.title;
         data.body = requestBody.body;
-        if(appUser) {
-            data.updatedBy = appUser;
-        }
-        data.updatedAt = Date.now();
-        data.save().then((data) => {
+        userHelper.getUserInfoByToken(req.headers.authorization).then(user => {
+            data.updatedBy = user;
+            data.updatedAt = Date.now();
+            data.save().then((data) => {
 
-            res.status(messages.POST.UPDATED.status).json({
-                code: messages.POST.UPDATED,
-                post: data
+                res.status(messages.POST.UPDATED.status).json({
+                    code: messages.POST.UPDATED,
+                    post: data
+                })
+            }, err => {
+                return next(err);
             })
-        }, err => {
+        }).catch(err => {
             return next(err);
         })
+
+
     }).catch(err => {
         return next(err);
     })

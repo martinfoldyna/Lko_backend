@@ -14,6 +14,7 @@ const customHelpers = require('./config/customHelpers');
 const exphbs = require('express-handlebars');
 const azureJWT = require('azure-jwt-verify');
 const verifier = require('google-id-token-verifier');
+const userHelper = require('./helpers/userFind.helper');
 
 const moment = require('moment');
 
@@ -63,37 +64,10 @@ app.use(async (req, res, next) => {
   let splittedUrl = req.originalUrl.split('/');
     if((splittedUrl.indexOf('api') >= 0) && splittedUrl.indexOf('login') < 0) {
       if(req.headers.authorization){
-        const splittedToken = req.headers.authorization.split(' ');
-        const provider = splittedToken[1];
-        const token = splittedToken[2];
-        if(provider === "google") {
+        userHelper.findUserByToken(req.headers.authorization).then(tokenInfo => {
+          req.next()
+        }).catch(err => res.status(500).send('Nejste autorizován'));
 
-          let clientID = process.env.TOKEN_STRATEGY_GOOGLE;
-
-          verifier.verify(token, clientID, function (err, tokenInfo) {
-              if(tokenInfo) {
-
-                return req.next();
-              } else {
-                return res.status(500).send('Nejste autorizován');
-
-              }
-
-          });
-        } else if(provider === "microsoft") {
-          let microsoftIss = process.env.TOKEN_STRATEGY_MICROSOFT_ISS;
-          let microsoftUri = process.env.TOKEN_STRATEGY_MICROSOFT_URI;
-          let microsoftAud = process.env.TOKEN_STRATEGY_MICROSOFT_AUD;
-          azureJWT.verify(token, {JWK_URI: microsoftUri, ISS: microsoftIss,AUD: microsoftAud}).then(tokenResponse => {
-            if(tokenResponse){
-              return req.next();
-            }
-          }).catch(err => {
-            return res.status(500).send(err);
-          });
-        } else {
-          req.next();
-        }
       } else {
         res.status(401).send('Nejste oprávněn pro tento přístup. <a href="/public">Vraťe se zpátky</a>')
       }
