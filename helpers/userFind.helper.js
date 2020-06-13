@@ -28,7 +28,8 @@ module.exports.findUserByToken = (reqToken) => {
             let microsoftAud = process.env.TOKEN_STRATEGY_MICROSOFT_AUD;
             azureJWT.verify(token, {JWK_URI: microsoftUri, ISS: microsoftIss,AUD: microsoftAud}).then(tokenResponse => {
                 if(tokenResponse){
-                    resolve(tokenResponse);
+                    let tokenInfo = JSON.parse(tokenResponse);
+                    resolve({email: tokenInfo.message.preferred_username.toLowerCase()});
                 }
             }).catch(err => {
                 reject(err);
