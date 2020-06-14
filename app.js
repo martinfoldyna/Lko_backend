@@ -62,7 +62,7 @@ require('./config/passport.settings')(passport);
 // AUTHENTICATION
 app.use(async (req, res, next) => {
   let splittedUrl = req.originalUrl.split('/');
-    if((splittedUrl.indexOf('api') >= 0) && splittedUrl.indexOf('login') < 0) {
+    if((splittedUrl.indexOf('api') >= 0) && splittedUrl.indexOf('login') < 0 && splittedUrl.indexOf('logout') < 0) {
       if(req.headers.authorization){
         userHelper.findUserByToken(req.headers.authorization).then(tokenInfo => {
           req.next()

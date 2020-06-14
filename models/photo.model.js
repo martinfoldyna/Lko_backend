@@ -30,6 +30,7 @@ const photosSchema = new mongoose.Schema({
     data: String,
     originalImg: String,
     thumbnail: Boolean,
+    description: String,
     group: String,
     subject: String,
     createdBy: Object,

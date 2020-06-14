@@ -127,6 +127,7 @@ module.exports.retrievePhotos = (req, res, next) => {
                             base64: image.data.toString('base64'),
                             orientation: image.orientation,
                             createdAt: image.createdAt,
+                            description: image.description,
                             createdBy: image.createdBy,
                             group: image.group,
                             classYear: image.classYear

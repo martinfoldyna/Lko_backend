@@ -142,6 +142,7 @@ router.get('/images', (req, res) => {
             name: file.name,
             data: file.data,
             subject: file.subject,
+            description: file.description,
             classYear: file.classYear+1,
             tag: 'foto'
           }
